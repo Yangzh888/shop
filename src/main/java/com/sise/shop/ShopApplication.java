@@ -15,6 +15,6 @@ public class ShopApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ShopApplication.class, args);
-        logger.info("=====================启动完毕============================");
+        logger.info("=====================启动完毕===========================");
     }
 }
