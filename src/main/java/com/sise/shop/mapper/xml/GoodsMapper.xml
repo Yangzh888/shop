@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.shop.mapper.GoodsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sise.shop.entity.Goods">
+        <result column="USER_ID" property="USER_ID" />
+        <result column="GOODS_ID" property="GOODS_ID" />
+        <result column="CUSTOMER_NAME" property="CUSTOMER_NAME" />
+        <result column="IDENTIFIER" property="IDENTIFIER" />
+        <result column="GOODS_FROM" property="GOODS_FROM" />
+        <result column="LOCATION" property="LOCATION" />
+        <result column="CREATE_TIME" property="CREATE_TIME" />
+        <result column="CREATER" property="CREATER" />
+        <result column="UPDATER" property="UPDATER" />
+        <result column="PRICE" property="PRICE" />
+        <result column="QUANTITY" property="QUANTITY" />
+        <result column="SUM" property="SUM" />
+    </resultMap>
+
+</mapper>

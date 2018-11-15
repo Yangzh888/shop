@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ message }}<br/>
+    <from action="#">
+       <lable>登陆</lable> <input type="text" v-model="user.username"/><br/>
+        <lable>注册</lable>  <input type="text" v-model="user.password"/><br/>
+
+        <ul>
+            <li v-for="(item,index) in list">{{index}}-{{item}}</li>    <!--index是遍历的值得索引-->
+        </ul>
+    </from>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            user:{username:"",password:""},
+            list:["1","2",3]
+        },
+        methods:{
+            submit:function () {
+                alert(this.user.username)
+            }
+        }
+    })
+</script>
+</body>
+</html>

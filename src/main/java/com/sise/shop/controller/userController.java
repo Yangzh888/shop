@@ -1,29 +1,32 @@
 package com.sise.shop.controller;
 
-import com.sise.shop.entity.User;
+
+
 import com.sise.shop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class userController {
 @Autowired
 private IUserService iUserService;
 
-    @RequestMapping("/hello")
-    public String helloHtml(HashMap<String, Object> map) {
-
+ /*   @RequestMapping(value="/hello",method=RequestMethod.GET)
+    public String helloHtml(HashMap<String, Object> map,Model model) {
         User user =iUserService.selectById("1");
-
         map.put("hello", "欢迎进入HTML页面");
-
-
-        return "/index";
+        System.out.println(user);
+        return "login";
     }
+    @ResponseBody
+    @RequestMapping(value="/logincheck", method=RequestMethod.POST)
+    public String test(User user){
+        String uname=user.getUsername();
+        String pwd=user.getPassword();
+        System.out.println(user);
+        System.out.println(pwd);
+        return "index";
+    }*/
 
-}
+ }

@@ -12,17 +12,17 @@
 <body>
 <div>
     <div id="box">
-    <form style="margin-left:500px;margin-top:200px;" >
-        <div class="form-group " >
-            <label  stype="display:inline;">账户：</label>
-            <input type="text" class="form-control"   style="display:inline;width:200px;"autocomplete="off" v-model="user.username"/>
-        </div>
-        <div class="form-group">
-            <label for="password" style="display:inline;">密码：</label>
-            <input type="password" class="form-control" id="password" style="display:inline;width:200px;"autocomplete="off" v-model="user.password" />
-        </div>
-        <button type="button" class="btn btn-primary  " @click="login">登录</button>
-    </form>
+        <form style="margin-left:500px;margin-top:200px;" >
+            <div class="form-group " >
+                <label  stype="display:inline;">账户：</label>
+                <input type="text" class="form-control"   style="display:inline;width:200px;"autocomplete="off" v-model="user.username"/>
+            </div>
+            <div class="form-group">
+                <label for="password" style="display:inline;">密码：</label>
+                <input type="password" class="form-control" id="password" style="display:inline;width:200px;"autocomplete="off" v-model="user.password" />
+            </div>
+            <button type="button" class="btn btn-primary  " @click="login">登录</button>
+        </form>
     </div>
 </div>
 
@@ -38,18 +38,18 @@
                 let data = this.user;
                 $.ajax({
                     type: "POST",
-                    url: "/login",
+                    url: "/user_info/logincheck",
                     data: data,
                     dataType: "json",
                     success: function(result){
-                       if(result==1){
-                           parent.location.href ='login.html';
-                           this.toLocaleString('login.html');
-                       }
-                       else
-                       {vm.refreshCode();
-                       alert("flase1111");
-                       }
+                        if(result==1){
+                            parent.location.href ='login.html';
+                            this.toLocaleString('login.html');
+                        }
+                        else
+                        {vm.refreshCode();
+                            alert("flase1111");
+                        }
                     }
                 });
             }

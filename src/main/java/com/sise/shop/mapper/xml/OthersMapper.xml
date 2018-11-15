@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.shop.mapper.OthersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sise.shop.entity.Others">
+        <result column="USER_ID" property="USER_ID" />
+        <result column="CREATE_TIME" property="CREATE_TIME" />
+        <result column="TITLE" property="TITLE" />
+        <result column="MEMO" property="MEMO" />
+        <result column="TIP" property="TIP" />
+        <result column="CREATER" property="CREATER" />
+        <result column="UPDATER" property="UPDATER" />
+        <result column="CONTACT_PHONE" property="CONTACT_PHONE" />
+        <result column="OTHERS_ID" property="OTHERS_ID" />
+    </resultMap>
+
+</mapper>
