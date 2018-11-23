@@ -34,22 +34,22 @@
             user:{username:"",password:""},
         },
         methods: {
-            login: function (event) {
+            login: function (result) {
                 let data = this.user;
+                let str="";
                 $.ajax({
                     type: "POST",
-                    url: "/user_info/logincheck",
+                    url: "/logincheck",
                     data: data,
+                    async : false,//此处需要注意的是要想获取ajax返回的值这个async属性必须设置成同步的，否则获取不到返回值
                     dataType: "json",
                     success: function(result){
-                        if(result==1){
-                            parent.location.href ='login.html';
-                            this.toLocaleString('login.html');
-                        }
-                        else
-                        {vm.refreshCode();
-                            alert("flase1111");
-                        }
+
+                        alert("5555");
+                    },
+
+                    error:function (result) {
+                        alert("66666");
                     }
                 });
             }

@@ -20,4 +20,7 @@
         <result column="OTHERS_ID" property="OTHERS_ID" />
     </resultMap>
 
+    <select id="selectById1" resultType="com.sise.shop.entity.User_info" parameterType="String">
+        select * from User_info where USER_ID=#{ID}
+    </select>
 </mapper>

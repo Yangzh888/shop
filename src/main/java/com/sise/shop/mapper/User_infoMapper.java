@@ -9,8 +9,9 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author Mht
- * @since 2018-11-15
+ * @since 2018-11-20
  */
 public interface User_infoMapper extends BaseMapper<User_info> {
 
+    public User_info selectById1(String ID);
 }
