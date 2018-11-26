@@ -1,4 +1,4 @@
-package com.sise.shop.utilis;
+package com.sise.shop.utilis.mybatisPlusGenerator;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
