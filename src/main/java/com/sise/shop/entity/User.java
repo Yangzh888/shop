@@ -1,11 +1,13 @@
 package com.sise.shop.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mht
@@ -15,10 +17,12 @@ public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
 
+    private Integer id;
+    @NotNull(message="账号不允许为空")
     private String username;
 
+    @NotNull(message="密码不允许为空")
     private String password;
 
     public Integer getId() {

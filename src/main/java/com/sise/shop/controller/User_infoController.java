@@ -1,6 +1,7 @@
 package com.sise.shop.controller;
 
 
+import com.sise.shop.entity.User;
 import com.sise.shop.entity.User_info;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
 
@@ -37,16 +39,16 @@ public void test() throws Exception {
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result login(@Valid @RequestBody User_info user_info, BindingResult bindingResult) {
-        System.out.println("进入方法");
+    public Result login(@Valid @RequestBody User user_info, BindingResult bindingResult) {
         System.out.println(user_info);
         if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
             return ResultFactory.buildFailResult(message);
         }
-        System.out.println(user_info);
-        if (!Objects.equals("123456", user_info.getUSER_ID()) || !Objects.equals("123456", user_info.getUSER_PASSWORD())) {
-            String message = String.format("登陆失败，详细信息[用户名、密码信息不正确]。");
+        System.out.println(user_info.getUsername());
+
+        if (!Objects.equals("123456", user_info.getUsername()) || !Objects.equals("123456", user_info.getPassword())) {
+            String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
             return ResultFactory.buildFailResult(message);
         }
         return ResultFactory.buildSuccessResult("登陆成功。");
