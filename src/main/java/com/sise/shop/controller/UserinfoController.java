@@ -28,6 +28,7 @@ public class UserinfoController {
 
     @Autowired
     private IUserinfoService iUserinfoService;
+
     /**
      * 登录控制器，前后端分离用的不同协议和端口，所以需要加入@CrossOrigin支持跨域。
      * 给VueLoginInfoVo对象加入@Valid注解，并在参数中加入BindingResult来获取错误信息。
@@ -37,18 +38,23 @@ public class UserinfoController {
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult) {
-        System.out.println(userInfo);
+
         if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
             return ResultFactory.buildFailResult(message);
         }
-        System.out.println(userInfo.getUsername());
+        if (!userInfo.getUserId().isEmpty()) {
+            String password = userInfo.getPassword();
+            Userinfo user = iUserinfoService.selectById(userInfo.getUserId());
+            if (!password.equals(user.getPassword())) {
+                String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
+                return ResultFactory.buildFailResult(message);
+            } else {
+                return ResultFactory.buildSuccessResult("登陆成功。");
 
-        if (!userInfo.getUsername().isEmpty()) {
-
-            String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
-            return ResultFactory.buildFailResult(message);
+            }
         }
-        return ResultFactory.buildSuccessResult("登陆成功。");
+        String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
+        return ResultFactory.buildFailResult(message);
     }
 }
