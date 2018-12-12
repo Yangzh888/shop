@@ -4,18 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sise.shop.entity.Goods">
-        <result column="USER_ID" property="USER_ID" />
-        <result column="GOODS_ID" property="GOODS_ID" />
-        <result column="CUSTOMER_NAME" property="CUSTOMER_NAME" />
-        <result column="IDENTIFIER" property="IDENTIFIER" />
-        <result column="GOODS_FROM" property="GOODS_FROM" />
-        <result column="LOCATION" property="LOCATION" />
-        <result column="CREATE_TIME" property="CREATE_TIME" />
-        <result column="CREATER" property="CREATER" />
-        <result column="UPDATER" property="UPDATER" />
-        <result column="PRICE" property="PRICE" />
-        <result column="QUANTITY" property="QUANTITY" />
-        <result column="SUM" property="SUM" />
+        <id column="goodsId" property="goodsId" />
+        <result column="userId" property="userId" />
+        <result column="tradeName" property="tradeName" />
+        <result column="identifier" property="identifier" />
+        <result column="goodFrom" property="goodFrom" />
+        <result column="location" property="location" />
+        <result column="createTime" property="createTime" />
+        <result column="creator" property="creator" />
+        <result column="updater" property="updater" />
+        <result column="price" property="price" />
+        <result column="quantity" property="quantity" />
+        <result column="sum" property="sum" />
     </resultMap>
 
 </mapper>

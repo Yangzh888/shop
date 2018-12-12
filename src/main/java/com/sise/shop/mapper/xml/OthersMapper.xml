@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sise.shop.entity.Others">
-        <result column="USER_ID" property="USER_ID" />
-        <result column="CREATE_TIME" property="CREATE_TIME" />
-        <result column="TITLE" property="TITLE" />
-        <result column="MEMO" property="MEMO" />
-        <result column="TIP" property="TIP" />
-        <result column="CREATER" property="CREATER" />
-        <result column="UPDATER" property="UPDATER" />
-        <result column="CONTACT_PHONE" property="CONTACT_PHONE" />
-        <result column="OTHERS_ID" property="OTHERS_ID" />
+        <id column="othersId" property="othersId" />
+        <result column="userId" property="userId" />
+        <result column="createTime" property="createTime" />
+        <result column="title" property="title" />
+        <result column="memo" property="memo" />
+        <result column="tip" property="tip" />
+        <result column="creator" property="creator" />
+        <result column="updater" property="updater" />
+        <result column="othersPhone" property="othersPhone" />
     </resultMap>
 
 </mapper>

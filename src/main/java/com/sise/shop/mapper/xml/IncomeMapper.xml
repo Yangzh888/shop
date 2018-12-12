@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sise.shop.entity.Income">
-        <result column="USER_ID" property="USER_ID" />
-        <result column="CREATE_TIME" property="CREATE_TIME" />
-        <result column="TITLE" property="TITLE" />
-        <result column="SUM" property="SUM" />
-        <result column="MEMO" property="MEMO" />
-        <result column="CREATER" property="CREATER" />
-        <result column="UPDATER" property="UPDATER" />
-        <result column="INCOME_ID" property="INCOME_ID" />
+        <id column="incomeId" property="incomeId" />
+        <result column="userId" property="userId" />
+        <result column="createTime" property="createTime" />
+        <result column="title" property="title" />
+        <result column="sum" property="sum" />
+        <result column="memo" property="memo" />
+        <result column="creator" property="creator" />
+        <result column="updater" property="updater" />
     </resultMap>
 
 </mapper>

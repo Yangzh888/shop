@@ -9,8 +9,8 @@ import java.io.Serializable;
  * 客户表
  * </p>
  *
- * @author Mht
- * @since 2018-11-20
+ * @author yangzhenhua
+ * @since 2018-12-12
  */
 public class Customer extends Model<Customer> {
 
@@ -19,142 +19,155 @@ public class Customer extends Model<Customer> {
     /**
      * 关联用户账号
      */
-    private String USER_ID;
+    private String userId;
 
     /**
      * 客户ID
      */
-    private String CUSTOMER_ID;
+    private String customerId;
 
     /**
      * 客户姓名
      */
-    private String CUSTOMER_NAME;
+    private String customerName;
 
     /**
      * 联系电话
      */
-    private String CONTACT_PHONE;
+    private String customerPhone;
 
     /**
      * 客户地址
      */
-    private String CUSTOMER_ADDRESS;
+    private String customerAddress;
 
     /**
      * 创建时间
      */
-    private Date CREATE_TIME;
+    private Date createTime;
 
     /**
      * 信息描述
      */
-    private String MEMO;
+    private String memo;
 
     /**
      * 金额
      */
-    private Integer SUM;
+    private Integer sum;
+
+    /**
+     * 创建人
+     */
+    private String creator;
 
     /**
      * 状态
      */
-    private String CUSTOMER_STATUS;
+    private String customerSataus;
 
     /**
      * 关联商品ID外键
      */
-    private String GOODS_ID;
+    private String goodsId;
 
-    public String getUSER_ID() {
-        return USER_ID;
-    }
-
-    public void setUSER_ID(String USER_ID) {
-        this.USER_ID = USER_ID;
-    }
-    public String getCUSTOMER_ID() {
-        return CUSTOMER_ID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setCUSTOMER_ID(String CUSTOMER_ID) {
-        this.CUSTOMER_ID = CUSTOMER_ID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    public String getCUSTOMER_NAME() {
-        return CUSTOMER_NAME;
-    }
-
-    public void setCUSTOMER_NAME(String CUSTOMER_NAME) {
-        this.CUSTOMER_NAME = CUSTOMER_NAME;
-    }
-    public String getCONTACT_PHONE() {
-        return CONTACT_PHONE;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCONTACT_PHONE(String CONTACT_PHONE) {
-        this.CONTACT_PHONE = CONTACT_PHONE;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
-    public String getCUSTOMER_ADDRESS() {
-        return CUSTOMER_ADDRESS;
-    }
-
-    public void setCUSTOMER_ADDRESS(String CUSTOMER_ADDRESS) {
-        this.CUSTOMER_ADDRESS = CUSTOMER_ADDRESS;
-    }
-    public Date getCREATE_TIME() {
-        return CREATE_TIME;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCREATE_TIME(Date CREATE_TIME) {
-        this.CREATE_TIME = CREATE_TIME;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
-    public String getMEMO() {
-        return MEMO;
-    }
-
-    public void setMEMO(String MEMO) {
-        this.MEMO = MEMO;
-    }
-    public Integer getSUM() {
-        return SUM;
+    public String getCustomerPhone() {
+        return customerPhone;
     }
 
-    public void setSUM(Integer SUM) {
-        this.SUM = SUM;
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
-    public String getCUSTOMER_STATUS() {
-        return CUSTOMER_STATUS;
-    }
-
-    public void setCUSTOMER_STATUS(String CUSTOMER_STATUS) {
-        this.CUSTOMER_STATUS = CUSTOMER_STATUS;
-    }
-    public String getGOODS_ID() {
-        return GOODS_ID;
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public void setGOODS_ID(String GOODS_ID) {
-        this.GOODS_ID = GOODS_ID;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+    public Integer getSum() {
+        return sum;
+    }
+
+    public void setSum(Integer sum) {
+        this.sum = sum;
+    }
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    public String getCustomerSataus() {
+        return customerSataus;
+    }
+
+    public void setCustomerSataus(String customerSataus) {
+        this.customerSataus = customerSataus;
+    }
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
     }
 
     @Override
     protected Serializable pkVal() {
-        return this.CUSTOMER_ID;
+        return this.customerId;
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-        "USER_ID=" + USER_ID +
-        ", CUSTOMER_ID=" + CUSTOMER_ID +
-        ", CUSTOMER_NAME=" + CUSTOMER_NAME +
-        ", CONTACT_PHONE=" + CONTACT_PHONE +
-        ", CUSTOMER_ADDRESS=" + CUSTOMER_ADDRESS +
-        ", CREATE_TIME=" + CREATE_TIME +
-        ", MEMO=" + MEMO +
-        ", SUM=" + SUM +
-        ", CUSTOMER_STATUS=" + CUSTOMER_STATUS +
-        ", GOODS_ID=" + GOODS_ID +
+        "userId=" + userId +
+        ", customerId=" + customerId +
+        ", customerName=" + customerName +
+        ", customerPhone=" + customerPhone +
+        ", customerAddress=" + customerAddress +
+        ", createTime=" + createTime +
+        ", memo=" + memo +
+        ", sum=" + sum +
+        ", creator=" + creator +
+        ", customerSataus=" + customerSataus +
+        ", goodsId=" + goodsId +
         "}";
     }
 }

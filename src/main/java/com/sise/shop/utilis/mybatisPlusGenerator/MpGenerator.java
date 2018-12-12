@@ -19,14 +19,15 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 public class MpGenerator {
 
     public static void main(String[] args) {
-//        assert (false) : "代码生成属于危险操作，请确定配置后取消断言执行代码生成！";
+        int n=1; int s=n/0;
+       assert (false) : "代码生成属于危险操作，请确定配置后取消断言执行代码生成！";
         AutoGenerator mpg = new AutoGenerator();
         // 选择 freemarker 引擎，默认 Velocity
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setAuthor("Mht");
+        gc.setAuthor("yangzhenhua");
         gc.setOutputDir("D://svnWork/shop/src/main/java");
         gc.setFileOverride(false);// 是否覆盖同名文件，默认是false
         gc.setActiveRecord(true);// 不需要ActiveRecord特性的请改为false

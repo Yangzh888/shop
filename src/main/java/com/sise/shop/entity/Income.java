@@ -9,8 +9,8 @@ import java.io.Serializable;
  * 支出表
  * </p>
  *
- * @author Mht
- * @since 2018-11-20
+ * @author yangzhenhua
+ * @since 2018-12-12
  */
 public class Income extends Model<Income> {
 
@@ -19,116 +19,116 @@ public class Income extends Model<Income> {
     /**
      * 关联用户账号
      */
-    private String USER_ID;
+    private String userId;
 
     /**
      * 创建时间
      */
-    private Date CREATE_TIME;
+    private Date createTime;
 
     /**
      * 标题
      */
-    private String TITLE;
+    private String title;
 
     /**
      * 金额
      */
-    private Integer SUM;
+    private Integer sum;
 
     /**
      * 描述
      */
-    private String MEMO;
+    private String memo;
 
     /**
      * 创建人
      */
-    private String CREATER;
+    private String creator;
 
     /**
      * 更新人
      */
-    private String UPDATER;
+    private String updater;
 
     /**
      * 收入ID
      */
-    private String INCOME_ID;
+    private String incomeId;
 
-    public String getUSER_ID() {
-        return USER_ID;
-    }
-
-    public void setUSER_ID(String USER_ID) {
-        this.USER_ID = USER_ID;
-    }
-    public Date getCREATE_TIME() {
-        return CREATE_TIME;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setCREATE_TIME(Date CREATE_TIME) {
-        this.CREATE_TIME = CREATE_TIME;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    public String getTITLE() {
-        return TITLE;
-    }
-
-    public void setTITLE(String TITLE) {
-        this.TITLE = TITLE;
-    }
-    public Integer getSUM() {
-        return SUM;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setSUM(Integer SUM) {
-        this.SUM = SUM;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
-    public String getMEMO() {
-        return MEMO;
-    }
-
-    public void setMEMO(String MEMO) {
-        this.MEMO = MEMO;
-    }
-    public String getCREATER() {
-        return CREATER;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCREATER(String CREATER) {
-        this.CREATER = CREATER;
+    public void setTitle(String title) {
+        this.title = title;
     }
-    public String getUPDATER() {
-        return UPDATER;
-    }
-
-    public void setUPDATER(String UPDATER) {
-        this.UPDATER = UPDATER;
-    }
-    public String getINCOME_ID() {
-        return INCOME_ID;
+    public Integer getSum() {
+        return sum;
     }
 
-    public void setINCOME_ID(String INCOME_ID) {
-        this.INCOME_ID = INCOME_ID;
+    public void setSum(Integer sum) {
+        this.sum = sum;
+    }
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+    public String getIncomeId() {
+        return incomeId;
+    }
+
+    public void setIncomeId(String incomeId) {
+        this.incomeId = incomeId;
     }
 
     @Override
     protected Serializable pkVal() {
-        return this.INCOME_ID;
+        return this.incomeId;
     }
 
     @Override
     public String toString() {
         return "Income{" +
-        "USER_ID=" + USER_ID +
-        ", CREATE_TIME=" + CREATE_TIME +
-        ", TITLE=" + TITLE +
-        ", SUM=" + SUM +
-        ", MEMO=" + MEMO +
-        ", CREATER=" + CREATER +
-        ", UPDATER=" + UPDATER +
-        ", INCOME_ID=" + INCOME_ID +
+        "userId=" + userId +
+        ", createTime=" + createTime +
+        ", title=" + title +
+        ", sum=" + sum +
+        ", memo=" + memo +
+        ", creator=" + creator +
+        ", updater=" + updater +
+        ", incomeId=" + incomeId +
         "}";
     }
 }

@@ -9,8 +9,8 @@ import java.io.Serializable;
  * 商品表
  * </p>
  *
- * @author Mht
- * @since 2018-11-20
+ * @author yangzhenhua
+ * @since 2018-12-12
  */
 public class Goods extends Model<Goods> {
 
@@ -19,168 +19,168 @@ public class Goods extends Model<Goods> {
     /**
      * 关联用户账号
      */
-    private String USER_ID;
+    private String userId;
 
     /**
      * 商品ID
      */
-    private String GOODS_ID;
+    private String goodsId;
 
     /**
      * 商品名称
      */
-    private String CUSTOMER_NAME;
+    private String tradeName;
 
     /**
      * 流水号
      */
-    private String IDENTIFIER;
+    private String identifier;
 
     /**
      * 来源
      */
-    private String GOODS_FROM;
+    private String goodFrom;
 
     /**
      * 所在位置
      */
-    private String LOCATION;
+    private String location;
 
     /**
      * 创建时间
      */
-    private Date CREATE_TIME;
+    private Date createTime;
 
     /**
      * 创建人
      */
-    private String CREATER;
+    private String creator;
 
     /**
      * 更新人
      */
-    private String UPDATER;
+    private String updater;
 
     /**
      * 单价
      */
-    private Integer PRICE;
+    private Integer price;
 
     /**
      * 数量
      */
-    private Integer QUANTITY;
+    private Integer quantity;
 
     /**
      * 总价
      */
-    private Integer SUM;
+    private Integer sum;
 
-    public String getUSER_ID() {
-        return USER_ID;
-    }
-
-    public void setUSER_ID(String USER_ID) {
-        this.USER_ID = USER_ID;
-    }
-    public String getGOODS_ID() {
-        return GOODS_ID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setGOODS_ID(String GOODS_ID) {
-        this.GOODS_ID = GOODS_ID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    public String getCUSTOMER_NAME() {
-        return CUSTOMER_NAME;
-    }
-
-    public void setCUSTOMER_NAME(String CUSTOMER_NAME) {
-        this.CUSTOMER_NAME = CUSTOMER_NAME;
-    }
-    public String getIDENTIFIER() {
-        return IDENTIFIER;
+    public String getGoodsId() {
+        return goodsId;
     }
 
-    public void setIDENTIFIER(String IDENTIFIER) {
-        this.IDENTIFIER = IDENTIFIER;
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
     }
-    public String getGOODS_FROM() {
-        return GOODS_FROM;
-    }
-
-    public void setGOODS_FROM(String GOODS_FROM) {
-        this.GOODS_FROM = GOODS_FROM;
-    }
-    public String getLOCATION() {
-        return LOCATION;
+    public String getTradeName() {
+        return tradeName;
     }
 
-    public void setLOCATION(String LOCATION) {
-        this.LOCATION = LOCATION;
+    public void setTradeName(String tradeName) {
+        this.tradeName = tradeName;
     }
-    public Date getCREATE_TIME() {
-        return CREATE_TIME;
-    }
-
-    public void setCREATE_TIME(Date CREATE_TIME) {
-        this.CREATE_TIME = CREATE_TIME;
-    }
-    public String getCREATER() {
-        return CREATER;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setCREATER(String CREATER) {
-        this.CREATER = CREATER;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
-    public String getUPDATER() {
-        return UPDATER;
-    }
-
-    public void setUPDATER(String UPDATER) {
-        this.UPDATER = UPDATER;
-    }
-    public Integer getPRICE() {
-        return PRICE;
+    public String getGoodFrom() {
+        return goodFrom;
     }
 
-    public void setPRICE(Integer PRICE) {
-        this.PRICE = PRICE;
+    public void setGoodFrom(String goodFrom) {
+        this.goodFrom = goodFrom;
     }
-    public Integer getQUANTITY() {
-        return QUANTITY;
-    }
-
-    public void setQUANTITY(Integer QUANTITY) {
-        this.QUANTITY = QUANTITY;
-    }
-    public Integer getSUM() {
-        return SUM;
+    public String getLocation() {
+        return location;
     }
 
-    public void setSUM(Integer SUM) {
-        this.SUM = SUM;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+    public Integer getSum() {
+        return sum;
+    }
+
+    public void setSum(Integer sum) {
+        this.sum = sum;
     }
 
     @Override
     protected Serializable pkVal() {
-        return this.GOODS_ID;
+        return this.goodsId;
     }
 
     @Override
     public String toString() {
         return "Goods{" +
-        "USER_ID=" + USER_ID +
-        ", GOODS_ID=" + GOODS_ID +
-        ", CUSTOMER_NAME=" + CUSTOMER_NAME +
-        ", IDENTIFIER=" + IDENTIFIER +
-        ", GOODS_FROM=" + GOODS_FROM +
-        ", LOCATION=" + LOCATION +
-        ", CREATE_TIME=" + CREATE_TIME +
-        ", CREATER=" + CREATER +
-        ", UPDATER=" + UPDATER +
-        ", PRICE=" + PRICE +
-        ", QUANTITY=" + QUANTITY +
-        ", SUM=" + SUM +
+        "userId=" + userId +
+        ", goodsId=" + goodsId +
+        ", tradeName=" + tradeName +
+        ", identifier=" + identifier +
+        ", goodFrom=" + goodFrom +
+        ", location=" + location +
+        ", createTime=" + createTime +
+        ", creator=" + creator +
+        ", updater=" + updater +
+        ", price=" + price +
+        ", quantity=" + quantity +
+        ", sum=" + sum +
         "}";
     }
 }

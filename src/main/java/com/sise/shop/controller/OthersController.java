@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
  * 其他表 前端控制器
  * </p>
  *
- * @author Mht
- * @since 2018-11-23
+ * @author yangzhenhua
+ * @since 2018-12-12
  */
 @Controller
 @RequestMapping("/others")

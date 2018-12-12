@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 支出表 服务实现类
  * </p>
  *
- * @author Mht
- * @since 2018-11-20
+ * @author yangzhenhua
+ * @since 2018-12-12
  */
 @Service
 public class ExpendServiceImpl extends ServiceImpl<ExpendMapper, Expend> implements IExpendService {

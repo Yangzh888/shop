@@ -9,8 +9,8 @@ import java.io.Serializable;
  * 支出表
  * </p>
  *
- * @author Mht
- * @since 2018-11-20
+ * @author yangzhenhua
+ * @since 2018-12-12
  */
 public class Expend extends Model<Expend> {
 
@@ -19,103 +19,103 @@ public class Expend extends Model<Expend> {
     /**
      * 关联用户账号
      */
-    private String USER_ID;
+    private String userId;
 
     /**
      * 创建时间
      */
-    private Date CREATE_TIME;
+    private Date createTime;
 
     /**
      * 金额
      */
-    private Integer SUM;
+    private Integer sum;
 
     /**
      * 创建人
      */
-    private String CREATER;
+    private String creator;
 
     /**
      * 更新人
      */
-    private String UPDATER;
+    private String updater;
 
     /**
      * 描述
      */
-    private String MEMO;
+    private String memo;
 
     /**
      * 支出ID
      */
-    private String EXPEND_ID;
+    private String espendId;
 
-    public String getUSER_ID() {
-        return USER_ID;
-    }
-
-    public void setUSER_ID(String USER_ID) {
-        this.USER_ID = USER_ID;
-    }
-    public Date getCREATE_TIME() {
-        return CREATE_TIME;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setCREATE_TIME(Date CREATE_TIME) {
-        this.CREATE_TIME = CREATE_TIME;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    public Integer getSUM() {
-        return SUM;
-    }
-
-    public void setSUM(Integer SUM) {
-        this.SUM = SUM;
-    }
-    public String getCREATER() {
-        return CREATER;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCREATER(String CREATER) {
-        this.CREATER = CREATER;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
-    public String getUPDATER() {
-        return UPDATER;
-    }
-
-    public void setUPDATER(String UPDATER) {
-        this.UPDATER = UPDATER;
-    }
-    public String getMEMO() {
-        return MEMO;
+    public Integer getSum() {
+        return sum;
     }
 
-    public void setMEMO(String MEMO) {
-        this.MEMO = MEMO;
+    public void setSum(Integer sum) {
+        this.sum = sum;
     }
-    public String getEXPEND_ID() {
-        return EXPEND_ID;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setEXPEND_ID(String EXPEND_ID) {
-        this.EXPEND_ID = EXPEND_ID;
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+    public String getEspendId() {
+        return espendId;
+    }
+
+    public void setEspendId(String espendId) {
+        this.espendId = espendId;
     }
 
     @Override
     protected Serializable pkVal() {
-        return this.EXPEND_ID;
+        return this.espendId;
     }
 
     @Override
     public String toString() {
         return "Expend{" +
-        "USER_ID=" + USER_ID +
-        ", CREATE_TIME=" + CREATE_TIME +
-        ", SUM=" + SUM +
-        ", CREATER=" + CREATER +
-        ", UPDATER=" + UPDATER +
-        ", MEMO=" + MEMO +
-        ", EXPEND_ID=" + EXPEND_ID +
+        "userId=" + userId +
+        ", createTime=" + createTime +
+        ", sum=" + sum +
+        ", creator=" + creator +
+        ", updater=" + updater +
+        ", memo=" + memo +
+        ", espendId=" + espendId +
         "}";
     }
 }
