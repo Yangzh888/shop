@@ -4,7 +4,11 @@ import com.sise.shop.entity.Userinfo;
 import com.sise.shop.mapper.UserinfoMapper;
 import com.sise.shop.service.IUserinfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +20,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> implements IUserinfoService {
+    @Resource
+    private UserinfoMapper userinfoMapper;
 
+    @Override
+    public List<Userinfo> login(String userId, String password) {
+        List<Userinfo> list = userinfoMapper.checekLogin(userId, password);
+
+        if (list == null && list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
+
+    }
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,6 +30,11 @@ public class UserinfoController {
 
     @Autowired
     private IUserinfoService iUserinfoService;
+    @RequestMapping("/hello")
+    public String helloHtml(HashMap<String, Object> map) {
+        map.put("hello", "欢迎进入HTML页面");
+        return "index";
+    }
 
     /**
      * 登录控制器，前后端分离用的不同协议和端口，所以需要加入@CrossOrigin支持跨域。
@@ -45,13 +52,13 @@ public class UserinfoController {
         }
         if (!userInfo.getUserId().isEmpty()) {
             String password = userInfo.getPassword();
-            Userinfo user = iUserinfoService.selectById(userInfo.getUserId());
-            if (!password.equals(user.getPassword())) {
+            String userId=userInfo.getUserId();
+            List<Userinfo> login = iUserinfoService.login(password, userId);
+            if (login==null||login.isEmpty()||login.size()==0) {
                 String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
                 return ResultFactory.buildFailResult(message);
             } else {
                 return ResultFactory.buildSuccessResult("登陆成功。");
-
             }
         }
         String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
