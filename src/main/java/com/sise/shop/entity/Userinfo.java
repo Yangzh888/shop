@@ -4,6 +4,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -26,6 +27,7 @@ public class Userinfo extends Model<Userinfo> {
     /**
      * 用户账号
      */
+    @NotNull(message="用户名不允许为空")
     @TableId
     private String userId;
 
@@ -37,6 +39,7 @@ public class Userinfo extends Model<Userinfo> {
     /**
      * 用户密码
      */
+    @NotNull(message="用户名不允许为空")
     private String password;
 
     /**

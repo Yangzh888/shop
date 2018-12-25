@@ -64,4 +64,17 @@ public class UserinfoController {
         String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
         return ResultFactory.buildFailResult(message);
     }
+    @CrossOrigin
+    @RequestMapping(value = "/api/register", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result register( @RequestBody Userinfo userInfo){
+        boolean insert = iUserinfoService.insert(userInfo);
+        if(insert==true){
+            return ResultFactory.buildSuccessResult("注册成功");
+        }else
+        {
+            return ResultFactory.buildFailResult("注册失败，请重新输入");
+        }
+
+    }
 }
