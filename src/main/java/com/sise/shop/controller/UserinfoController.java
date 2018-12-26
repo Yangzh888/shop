@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -59,7 +60,8 @@ public class UserinfoController {
                 String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
                 return ResultFactory.buildFailResult(message);
             } else {
-                return ResultFactory.buildSuccessResult("登陆成功。");
+                Userinfo userinfo = iUserinfoService.selectById(userId);
+                return ResultFactory.buildSuccessResult(userinfo);
             }
         }
         String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
@@ -79,9 +81,11 @@ public class UserinfoController {
 
     }
     @CrossOrigin
-    @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Userinfo  getUserInfo(MapRequestVO mapRequestVO){
-        return null;
+    public List<Userinfo>  getUserInfo( @RequestBody Userinfo userinfo){
+        String userId = userinfo.getUserId();
+        List<Userinfo> list = iUserinfoService.selectBatchIds(Collections.singleton(userId));
+        return list;
     }
 }
