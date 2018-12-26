@@ -2,6 +2,8 @@ package com.sise.shop.entity;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -24,6 +26,7 @@ public class Goods extends Model<Goods> {
     /**
      * 商品ID
      */
+    @TableId
     private String goodsId;
 
     /**

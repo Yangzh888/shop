@@ -2,6 +2,8 @@ package com.sise.shop.entity;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -19,6 +21,7 @@ public class Customer extends Model<Customer> {
     /**
      * 关联用户账号
      */
+    @TableId
     private String userId;
 
     /**

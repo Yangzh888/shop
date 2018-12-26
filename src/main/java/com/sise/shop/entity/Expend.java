@@ -2,6 +2,8 @@ package com.sise.shop.entity;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -49,6 +51,7 @@ public class Expend extends Model<Expend> {
     /**
      * 支出ID
      */
+    @TableId
     private String espendId;
 
     public String getUserId() {
