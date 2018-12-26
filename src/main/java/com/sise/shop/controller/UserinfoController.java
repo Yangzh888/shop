@@ -3,6 +3,7 @@ package com.sise.shop.controller;
 
 import com.sise.shop.entity.Userinfo;
 import com.sise.shop.service.IUserinfoService;
+import com.sise.shop.utilis.MapRequestVO;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,11 @@ public class UserinfoController {
             return ResultFactory.buildFailResult("注册失败，请重新输入");
         }
 
+    }
+    @CrossOrigin
+    @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Userinfo  getUserInfo(MapRequestVO mapRequestVO){
+        return null;
     }
 }
