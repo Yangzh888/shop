@@ -2,6 +2,9 @@ package com.sise.shop.mapper;
 
 import com.sise.shop.entity.Others;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface OthersMapper extends BaseMapper<Others> {
 
+    @Select("select * from others where userId=#{userId}")
+    List<Others> queryOthersByUserId(String userId);
 }

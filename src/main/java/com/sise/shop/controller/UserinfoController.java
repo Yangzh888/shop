@@ -27,7 +27,7 @@ import java.util.Objects;
  * @since 2018-12-12
  */
 @Controller
-@RequestMapping()
+@RequestMapping("/api/userInfo")
 public class UserinfoController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class UserinfoController {
      * 在逻辑处理中我们判断BindingResult知否含有错误信息，如果有错误信息，则直接返回错误信息。
      */
     @CrossOrigin
-    @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult) {
 

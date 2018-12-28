@@ -6,6 +6,9 @@ import com.sise.shop.service.IOthersService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * <p>
  * 其他表 服务实现类
@@ -16,5 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OthersServiceImpl extends ServiceImpl<OthersMapper, Others> implements IOthersService {
-
+    @Resource
+     private OthersMapper othersMapper;
+    @Override
+    public List<Others> queryOthersByUserId(String userId)
+    {
+        return othersMapper.queryOthersByUserId(userId);
+    }
 }
