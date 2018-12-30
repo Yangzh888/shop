@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author yangzhenhua
  * @since 2018-12-12
  */
-public class Others extends Model<Others> {
+public class Others extends Model<Others> implements java.io.Serializable  {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class Others extends Model<Others> {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 标题
@@ -71,13 +71,15 @@ public class Others extends Model<Others> {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    public Date getCreateTime() {
+
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
     public String getTitle() {
         return title;
     }

@@ -4,11 +4,13 @@ package com.sise.shop.controller;
 import com.sise.shop.entity.Others;
 import com.sise.shop.service.IOthersService;
 import com.sise.shop.utilis.MapRequestVO;
+import com.sise.shop.utilis.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +41,20 @@ public class OthersController {
         String userId = (String) map.get("userId");
         List<Others> list=iOthersService.queryOthersByUserId(userId);
         return list;
+    }
+
+    /**
+     * 保存代办信息
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/saveReadyDo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result saveReadyDo(@RequestBody Map map){
+
+        Result result= iOthersService.saveReadyDo(map);
+
+        return result;
     }
 }

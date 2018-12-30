@@ -68,7 +68,7 @@ public class UserinfoController {
         return ResultFactory.buildFailResult(message);
     }
     @CrossOrigin
-    @RequestMapping(value = "/api/register", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Result register( @RequestBody Userinfo userInfo){
         boolean insert = iUserinfoService.insert(userInfo);
