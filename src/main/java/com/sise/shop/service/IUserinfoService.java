@@ -6,6 +6,7 @@ import com.sise.shop.utilis.result.Result;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,5 +23,10 @@ public interface IUserinfoService extends IService<Userinfo> {
      */
     List<Userinfo>  login(String userId,String password);
 
-
+    /**
+     * 校验主键唯一性
+     * @param userId
+     * @return
+     */
+    List<Userinfo> checkUnqiue(String userId);
 }

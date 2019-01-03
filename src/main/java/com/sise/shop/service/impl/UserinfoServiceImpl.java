@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,5 +34,15 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             return list;
         }
 
+    }
+
+    @Override
+    public List<Userinfo> checkUnqiue(String userId) {
+        List<Userinfo> list=  userinfoMapper.checkUnqiue(userId);
+        if (list == null && list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
     }
 }

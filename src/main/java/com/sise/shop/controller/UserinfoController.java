@@ -71,6 +71,12 @@ public class UserinfoController {
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Result register( @RequestBody Userinfo userInfo){
+        String userId = userInfo.getUserId();
+        //判断当前传过来的账户有没有被注册过(主键唯一性)
+        List<Userinfo> userinfolist = iUserinfoService.checkUnqiue(userId);
+        if(userinfolist.size()>0){
+          return ResultFactory.buildFailResult("注册失败，当前登录账户已被使用，请使用其他账户");
+        }
         boolean insert = iUserinfoService.insert(userInfo);
         if(insert==true){
             return ResultFactory.buildSuccessResult("注册成功");

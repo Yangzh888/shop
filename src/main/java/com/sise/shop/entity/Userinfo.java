@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author yangzhenhua
  * @since 2018-12-12
  */
-public class Userinfo extends Model<Userinfo> {
+public class Userinfo extends Model<Userinfo> implements java.io.Serializable  {
 
     private static final long serialVersionUID = 1L;
 

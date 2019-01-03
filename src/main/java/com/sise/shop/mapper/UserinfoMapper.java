@@ -16,6 +16,10 @@ import java.util.List;
  */
 public interface UserinfoMapper extends BaseMapper<Userinfo> {
 
+    @Select("select  * from userInfo where userId=#{userId}")
+    List<Userinfo>  checkUnqiue(@Param("userId")String userId) ;
+
+
     @Select("select * from userInfo where userId =#{userId} and password=#{password}")
     List<Userinfo> checekLogin(@Param("userId")String userId, @Param("password")String password);
 
