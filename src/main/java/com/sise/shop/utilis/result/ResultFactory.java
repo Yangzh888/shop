@@ -11,7 +11,6 @@ public class ResultFactory {
     public static Result buildSuccessResult(Object data) {
         return buidResult(ResultCode.SUCCESS, "成功", data);
     }
-
     public static Result buildFailResult(String message) {
         return buidResult(ResultCode.FAIL, message, null);
     }

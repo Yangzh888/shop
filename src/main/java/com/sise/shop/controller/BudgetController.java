@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,19 +33,21 @@ public class BudgetController {
     @RequestMapping(value = "/saveBudget", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Result saveBudget( @RequestBody Map map){
-        String userId = (String) map.get("userId");
-        Map formMap = (Map) map.get("form");
-        String  creatTime = (String) formMap.get("createTime");
-        int inSum= Integer.parseInt((String) formMap.get("inSum"));
-        int outSum = Integer.parseInt((String) formMap.get("outSum"));
-        Budget budget = new Budget();
-        budget.setUserId(userId);
-        budget.setCreateTime(creatTime);
-        budget.setInSum(inSum);
-        budget.setOutSum(outSum);
-        String id = UUID.randomUUID().toString().replaceAll("-", "");
-       budget.setBudgetId(id);
-       iBudgetService.insert(budget);
-        return ResultFactory.buildSuccessResult("新增成功");
+        Result result = iBudgetService.saveBudget(map);
+        return result;
     }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/getBubgetData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public  List<Budget> getBubgetData( @RequestBody Map map){
+        String userId = (String) map.get("userId");
+        List<Budget> budgetList=iBudgetService.selectByUserId(userId);
+
+
+
+        return budgetList;
+    }
+
 }
