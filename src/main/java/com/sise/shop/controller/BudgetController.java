@@ -44,9 +44,6 @@ public class BudgetController {
     public  List<Budget> getBubgetData( @RequestBody Map map){
         String userId = (String) map.get("userId");
         List<Budget> budgetList=iBudgetService.selectByUserId(userId);
-
-
-
         return budgetList;
     }
 
