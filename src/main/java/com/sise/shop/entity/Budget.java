@@ -1,6 +1,5 @@
 package com.sise.shop.entity;
 
-import java.util.Date;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 
@@ -32,6 +31,10 @@ public class Budget extends Model<Budget> implements java.io.Serializable   {
      * 收入金额
      */
     private Integer inSum;
+
+    public Integer getInSum() {
+        return inSum;
+    }
 
     /**
      * 支出金额
@@ -75,9 +78,6 @@ public class Budget extends Model<Budget> implements java.io.Serializable   {
         this.createTime = createTime;
     }
 
-    public Integer getInSum() {
-        return inSum;
-    }
 
     public void setInSum(Integer inSum) {
         this.inSum = inSum;

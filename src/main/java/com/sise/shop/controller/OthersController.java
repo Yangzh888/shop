@@ -33,7 +33,6 @@ public class OthersController {
      * @param map
      * @return
      */
-
     @CrossOrigin
     @RequestMapping(value = "/getOthersDate", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody

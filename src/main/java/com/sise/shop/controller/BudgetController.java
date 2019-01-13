@@ -1,15 +1,22 @@
 package com.sise.shop.controller;
 
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.sise.shop.entity.Budget;
+import com.sise.shop.entity.EchartsEntityParam;
 import com.sise.shop.service.IBudgetService;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.thymeleaf.util.MapUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -47,4 +54,62 @@ public class BudgetController {
         return budgetList;
     }
 
+    /**
+     * 获取收支信息生成图表数据---最近7天信息
+     * @param map
+     * @return
+     */
+
+    @CrossOrigin
+    @RequestMapping(value = "/getEchartsInComeData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public  List<EchartsEntityParam> getEchartsInComeData( @RequestBody Map map){
+        String userId = (String) map.get("userId");
+        List<Budget> budgetList=iBudgetService.selectByUserIdLimit7(userId);
+        List<EchartsEntityParam> echartsList=new ArrayList<>();
+        for (Budget budget:budgetList){
+            EchartsEntityParam echarts = new EchartsEntityParam();
+            String createTime = budget.getCreateTime();
+            String[] yyyyDDmm = createTime.split(" ");  //切割时间为yyyyDDmm hh:mm:ss
+            echarts.setName(yyyyDDmm[0]);
+            echarts.setValue(budget.getInSum());
+            echartsList.add(echarts);
+        }
+        return echartsList;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getEchartsOutComeData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public  List<EchartsEntityParam> getEchartsOutComeData( @RequestBody Map map){
+        String userId = (String) map.get("userId");
+        List<Budget> budgetList=iBudgetService.selectByUserIdLimit7(userId);
+        List<EchartsEntityParam> echartsList=new ArrayList<>();
+        for (Budget budget:budgetList){
+            EchartsEntityParam echarts = new EchartsEntityParam();
+            String createTime = budget.getCreateTime();
+            String[] yyyyDDmm = createTime.split(" ");  //切割时间为yyyyDDmm hh:mm:ss
+            echarts.setName(yyyyDDmm[0]);
+            echarts.setValue(budget.getOutSum());
+            echartsList.add(echarts);
+        }
+        return echartsList;
+    }
+    /**
+     * 查询收入支出分页数据
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/selectPage", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Page<Budget> selectPage( @RequestBody Map map){
+        Budget budget = new Budget();
+        String userId = (String) map.get("userId");
+        budget.setUserId(userId);
+        Page<Budget> page = new Page<Budget>();
+        EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget);
+        Page<Budget> budgetList = budget.selectPage(page,eWrapper);
+        return  budgetList;
+    }
 }

@@ -30,6 +30,9 @@ import java.util.Objects;
 @RequestMapping("/api/userInfo")
 public class UserinfoController {
 
+    /**
+     * 测试
+     */
     @Autowired
     private IUserinfoService iUserinfoService;
     @RequestMapping("/hello")
@@ -67,6 +70,12 @@ public class UserinfoController {
         String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
         return ResultFactory.buildFailResult(message);
     }
+
+    /**
+     * 注册功能
+     * @param userInfo
+     * @return
+     */
     @CrossOrigin
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
@@ -86,6 +95,12 @@ public class UserinfoController {
         }
 
     }
+
+    /**
+     * 获取当前登录人的信息
+     * @param userinfo
+     * @return
+     */
     @CrossOrigin
     @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody

@@ -9,10 +9,9 @@ import com.sise.shop.utilis.result.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * <p>
@@ -33,6 +32,11 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         return budgetMapper.selectByUserId(userId);
     }
 
+    @Override
+    public List<Budget> selectByUserIdLimit7(String userId) {
+        return budgetMapper.selectByUserIdLimit7(userId);
+    }
+
     @Autowired
     private IBudgetService iBudgetService;
     @Override
@@ -42,11 +46,13 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         String  creatTime = (String) formMap.get("createTime");
         int inSum= Integer.parseInt((String) formMap.get("inSum"));
         int outSum = Integer.parseInt((String) formMap.get("outSum"));
+        String memo= (String) formMap.get("memo");
         Budget budget = new Budget();
         budget.setUserId(userId);
         budget.setCreateTime(creatTime);
         budget.setInSum(inSum);
         budget.setOutSum(outSum);
+        budget.setMemo(memo);
         String id = UUID.randomUUID().toString().replaceAll("-", "");
         budget.setBudgetId(id);
         iBudgetService.insert(budget);

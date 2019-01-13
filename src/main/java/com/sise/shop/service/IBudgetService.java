@@ -25,4 +25,11 @@ public interface IBudgetService extends IService<Budget> {
     Result saveBudget(Map map);
 
     List<Budget> selectByUserId(String userId);
+
+    /**
+     * 查询最近7天的收支信息
+     * @param userId
+     * @return
+     */
+    List<Budget> selectByUserIdLimit7(String userId);
 }

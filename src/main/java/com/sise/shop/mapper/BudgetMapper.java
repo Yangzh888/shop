@@ -16,6 +16,9 @@ import java.util.List;
  */
 public interface BudgetMapper extends BaseMapper<Budget> {
 
-    @Select("select * from  budget where userId=#{userId}")
+    @Select("select * from  budget where userId=#{userId} order by createTime desc")
     List<Budget> selectByUserId(String userId);
+
+    @Select("select  * from budget where userId=#{userId} GROUP BY createTime order by createTime DESC  LIMIT 7")
+    List<Budget> selectByUserIdLimit7(String userId);
 }
