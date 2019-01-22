@@ -7,19 +7,13 @@ import com.sise.shop.entity.Budget;
 import com.sise.shop.entity.EchartsEntityParam;
 import com.sise.shop.service.IBudgetService;
 import com.sise.shop.utilis.result.Result;
-import com.sise.shop.utilis.result.ResultFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
-import org.thymeleaf.util.MapUtils;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
 
 /**
  * <p>
@@ -108,8 +102,11 @@ public class BudgetController {
         String userId = (String) map.get("userId");
         budget.setUserId(userId);
         Page<Budget> page = new Page<Budget>();
-        EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget);
+
+        EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget,"8");
+
         Page<Budget> budgetList = budget.selectPage(page,eWrapper);
+
         return  budgetList;
     }
 }
