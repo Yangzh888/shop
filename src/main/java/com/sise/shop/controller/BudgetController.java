@@ -102,11 +102,8 @@ public class BudgetController {
         String userId = (String) map.get("userId");
         budget.setUserId(userId);
         Page<Budget> page = new Page<Budget>();
-
         EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget,"8");
-
         Page<Budget> budgetList = budget.selectPage(page,eWrapper);
-
         return  budgetList;
     }
 }
