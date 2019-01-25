@@ -6,6 +6,7 @@ import com.sise.shop.service.IBudgetService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
+import com.sise.shop.utilis.shopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +54,7 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         budget.setInSum(inSum);
         budget.setOutSum(outSum);
         budget.setMemo(memo);
-        String id = UUID.randomUUID().toString().replaceAll("-", "");
-        budget.setBudgetId(id);
+        budget.setBudgetId(shopUtils.getUuid());
         iBudgetService.insert(budget);
         return ResultFactory.buildSuccessResult("新增成功");
     }
