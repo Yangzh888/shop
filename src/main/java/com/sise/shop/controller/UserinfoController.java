@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class UserinfoController {
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult) {
+    public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult, HttpSession httpSession) {
 
         if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
@@ -102,7 +103,7 @@ public class UserinfoController {
      * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public List<Userinfo>  getUserInfo( @RequestBody Userinfo userinfo){
         String userId = userinfo.getUserId();

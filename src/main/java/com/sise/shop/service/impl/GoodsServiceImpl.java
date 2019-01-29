@@ -6,6 +6,11 @@ import com.sise.shop.service.IGoodsService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.sql.Wrapper;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 商品表 服务实现类
@@ -16,5 +21,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements IGoodsService {
+    @Resource
+    private GoodsMapper goodsMapper;
 
+    @Override
+    public List<Goods> getGoodsInfo(Map map) {
+
+        List<Goods> list = goodsMapper.selectByMap(map);
+        return list;
+
+    }
 }

@@ -1,9 +1,17 @@
 package com.sise.shop.utilis;
 
+import org.apache.commons.collections4.MapUtils;
+import org.thymeleaf.util.StringUtils;
+import sun.misc.Request;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,5 +40,16 @@ public class shopUtils {
         return uuid;
     }
 
-
+    /**
+     * 获取map中的UserId
+     * @param map
+     * @return
+     */
+    public static String getUserId(Map map){
+        String userId = MapUtils.getString(map, "userId");
+        if(StringUtils.isEmpty(userId)){
+            return userId ;
+        }
+        return null;
+    }
 }
