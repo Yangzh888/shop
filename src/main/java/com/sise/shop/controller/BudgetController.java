@@ -1,15 +1,19 @@
 package com.sise.shop.controller;
 
 
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sise.shop.entity.Budget;
 import com.sise.shop.entity.EchartsEntityParam;
 import com.sise.shop.service.IBudgetService;
 import com.sise.shop.utilis.result.Result;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.thymeleaf.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +107,10 @@ public class BudgetController {
         budget.setUserId(userId);
         Page<Budget> page = new Page<Budget>();
         EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget,"8");
+        String selectWord = MapUtils.getString(map, "selectWord");              //判断是否有模糊查询参数
+        if(!StringUtils.isEmpty(selectWord)){
+            eWrapper.like("memo",selectWord,SqlLike.DEFAULT);
+        }
         Page<Budget> budgetList = budget.selectPage(page,eWrapper);
         return  budgetList;
     }

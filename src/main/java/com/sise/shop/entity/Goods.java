@@ -52,7 +52,7 @@ public class Goods extends Model<Goods>  implements java.io.Serializable  {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 创建人
@@ -121,13 +121,15 @@ public class Goods extends Model<Goods>  implements java.io.Serializable  {
     public void setLocation(String location) {
         this.location = location;
     }
-    public Date getCreateTime() {
+
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
     public String getCreator() {
         return creator;
     }

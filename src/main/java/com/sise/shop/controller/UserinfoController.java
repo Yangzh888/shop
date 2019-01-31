@@ -6,6 +6,8 @@ import com.sise.shop.service.IUserinfoService;
 import com.sise.shop.utilis.MapRequestVO;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
+import com.sise.shop.utilis.shopUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,8 @@ import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 /**
  * <p>
@@ -83,8 +83,8 @@ public class UserinfoController {
     public Result register( @RequestBody Userinfo userInfo){
         String userId = userInfo.getUserId();
         //判断当前传过来的账户有没有被注册过(主键唯一性)
-        List<Userinfo> userinfolist = iUserinfoService.checkUnqiue(userId);
-        if(userinfolist.size()>0){
+        List<Userinfo> userInfoList = iUserinfoService.checkUnqiue(userId);
+        if(userInfoList.size()>0){
           return ResultFactory.buildFailResult("注册失败，当前登录账户已被使用，请使用其他账户");
         }
         boolean insert = iUserinfoService.insert(userInfo);
@@ -105,9 +105,27 @@ public class UserinfoController {
     @CrossOrigin
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<Userinfo>  getUserInfo( @RequestBody Userinfo userinfo){
+    public Result  getUserInfo( @RequestBody Userinfo userinfo){
         String userId = userinfo.getUserId();
-        List<Userinfo> list = iUserinfoService.selectBatchIds(Collections.singleton(userId));
-        return list;
+        Userinfo user = iUserinfoService.selectById(userId);
+        return ResultFactory.buildSuccessResult(user);
+    }
+    /**
+     * 获取当前登录人的信息
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result  updateUserInfo( @RequestBody Map map) throws InvocationTargetException, IllegalAccessException {
+        Userinfo u=new Userinfo();
+        Map userInfoMap= (Map) map.get("form");
+        BeanUtils.populate(u,userInfoMap);
+        boolean update = iUserinfoService.updateById(u);
+        if(update==true){
+            return ResultFactory.buildSuccessResult("更新成功");
+        }else
+        return ResultFactory.buildFailResult("更新失败");
     }
 }

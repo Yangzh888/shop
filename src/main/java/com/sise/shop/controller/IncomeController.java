@@ -31,7 +31,10 @@ public class IncomeController {
     private IIncomeService iIncomeService;
 
     //Memo查询标题，title：keyWord
-
+    /**
+     * 模糊搜索林俊杰题目和问题
+     * @param map
+     */
     @CrossOrigin
     @RequestMapping(value = "/search", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
@@ -40,10 +43,16 @@ public class IncomeController {
         List<Income> result = iIncomeService.selectTitle(title);
         return result;
     }
+
+
+    /**
+     * 保存林俊杰题目和问题
+     * @param map
+     */
     @CrossOrigin
     @RequestMapping(value = "/saveTitleAndAnswer", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result saveTitleAndAnswer(@RequestBody Map map){
+    public void saveTitleAndAnswer(@RequestBody Map map){
         String title = MapUtils.getString(map, "question");
         String answer = MapUtils.getString(map, "answer");
         Income income=new Income();
@@ -51,8 +60,6 @@ public class IncomeController {
         income.setMemo(answer);
         String id = UUID.randomUUID().toString().replaceAll("-", "");
         income.setIncomeId(id);
-         iIncomeService.insert(income);
-
-        return null;
+        iIncomeService.insert(income);
     }
 }

@@ -2,16 +2,12 @@ package com.sise.shop.utilis;
 
 import org.apache.commons.collections4.MapUtils;
 import org.thymeleaf.util.StringUtils;
-import sun.misc.Request;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -33,6 +29,7 @@ public class shopUtils {
 
     /**
      * 获取UUid的值
+     *
      * @return
      */
     public static String getUuid() {
@@ -42,14 +39,27 @@ public class shopUtils {
 
     /**
      * 获取map中的UserId
+     *
      * @param map
      * @return
      */
-    public static String getUserId(Map map){
+    public static String getUserId(Map map) {
         String userId = MapUtils.getString(map, "userId");
-        if(StringUtils.isEmpty(userId)){
-            return userId ;
+        if (!StringUtils.isEmpty(userId)) {
+            return userId;
         }
         return null;
+    }
+
+    /**
+     * 传入一个时间字符串+3位生成随机编号
+     */
+    public static String getOrderNumber(String date) {
+        String data = date.replaceAll("-", "");
+        String[] split = data.split(" ");
+        String orderNumberDate = split[0];
+        String random = String.valueOf((int) ((Math.random() * 9 + 1) * 100));
+        String orderNumber = orderNumberDate + random;
+        return orderNumber;
     }
 }

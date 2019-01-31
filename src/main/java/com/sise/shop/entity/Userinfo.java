@@ -65,7 +65,7 @@ public class Userinfo extends Model<Userinfo> implements java.io.Serializable  {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 创建人
@@ -153,13 +153,15 @@ public class Userinfo extends Model<Userinfo> implements java.io.Serializable  {
     public void setRank(String rank) {
         this.rank = rank;
     }
-    public Date getCreateTime() {
+
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
     public String getCreator() {
         return creator;
     }

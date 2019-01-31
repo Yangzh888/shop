@@ -94,6 +94,11 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.2</version>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
     </dependencies>
 
     <build>

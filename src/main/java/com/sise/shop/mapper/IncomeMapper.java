@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface IncomeMapper extends BaseMapper<Income> {
 
-    @Select("select * from  income where title like CONCAT('%',#{title},'%') or creator like CONCAT('%',#{title},'%') ")
+    @Select("select * from  income where title like CONCAT('%',#{title},'%') or memo like CONCAT('%',#{title},'%') ")
     List<Income> selectTitle(String title);
 }
