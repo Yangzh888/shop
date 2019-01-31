@@ -8,6 +8,7 @@ import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -108,6 +109,8 @@ public class UserinfoController {
     public Result  getUserInfo( @RequestBody Userinfo userinfo){
         String userId = userinfo.getUserId();
         Userinfo user = iUserinfoService.selectById(userId);
+        user.setForgetAns("");
+        user.setPassword("");
         return ResultFactory.buildSuccessResult(user);
     }
     /**
@@ -127,5 +130,38 @@ public class UserinfoController {
             return ResultFactory.buildSuccessResult("更新成功");
         }else
         return ResultFactory.buildFailResult("更新失败");
+    }
+
+    /**
+     * 获取忘记密码的问题
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getAns", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result  getAns( @RequestBody Map map) {
+        String userId = shopUtils.getUserId(map);
+        Userinfo userinfo = iUserinfoService.selectById(userId);
+        String forgetAns = userinfo.getForgetAns();
+        return ResultFactory.buildSuccessResult(forgetAns);
+    }
+
+    /**
+     * 根据问题修改密码
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/checkAnsToChangePassWord", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result  checkAnsToChangePassWord( @RequestBody Map map) {
+       boolean b=iUserinfoService.checkAnsToChangePassWord(map);
+       if(b==true){
+           return ResultFactory.buildSuccessResult(b);
+       }else{
+           return ResultFactory.buildFailResult("问题答案不正确");
+       }
+
     }
 }

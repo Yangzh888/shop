@@ -4,6 +4,8 @@ import com.sise.shop.entity.Userinfo;
 import com.sise.shop.mapper.UserinfoMapper;
 import com.sise.shop.service.IUserinfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.sise.shop.utilis.shopUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,4 +47,19 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             return list;
         }
     }
+
+    @Override
+    public boolean checkAnsToChangePassWord(Map map) {
+        String userId = shopUtils.getUserId(map);
+        Map fromMap= (Map) map.get("changeForm");
+        Userinfo userinfo = userinfoMapper.selectById(userId);
+        String forgetAns = userinfo.getForgetAns();             //数据库存放的原有答案
+        String forgetAnsCheck = MapUtils.getString(fromMap, "forgetAnsCheck");   //用户传输过来的答案
+        if(forgetAns.equals(forgetAnsCheck)){
+            String newPassWord = MapUtils.getString(fromMap, "newPassWord");
+            userinfoMapper.updatePassword(newPassWord,userId);
+            return true;
+        }else{
+       return false;
+    }}
 }

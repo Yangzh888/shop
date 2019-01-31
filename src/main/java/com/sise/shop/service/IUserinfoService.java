@@ -29,4 +29,12 @@ public interface IUserinfoService extends IService<Userinfo> {
      * @return
      */
     List<Userinfo> checkUnqiue(String userId);
+
+    /**
+     * 根据问题去修改密码
+     * @param map
+     * @return
+     */
+    boolean checkAnsToChangePassWord(Map map);
+
 }

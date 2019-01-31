@@ -38,4 +38,7 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
 
     @Select("select * from users")
     public List<Userinfo> getAllUsers();
+
+    @Select("update userinfo set password=#{newPassWord} where userId=#{userId}")
+    void updatePassword(@Param("newPassWord")String newPassWord,@Param("userId")String userId);
 }
