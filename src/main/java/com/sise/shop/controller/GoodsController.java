@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sise.shop.entity.Goods;
+import com.sise.shop.entity.GoodsParam;
+import com.sise.shop.entity.Goodsinfo;
 import com.sise.shop.service.IGoodsService;
+import com.sise.shop.service.IGoodsinfoService;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
@@ -16,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.thymeleaf.util.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +36,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api/goods")
 public class GoodsController {
+    /**
+     * 获取商品记录Serviec
+     */
     @Autowired
     private IGoodsService iGoodsService;
+    /**
+     * 获取配置商品的Serviec
+     */
+    @Autowired
+    private IGoodsinfoService iGoodsinfoService;
     /**
      * 获取商品的信息
      * @return
@@ -58,7 +72,7 @@ public class GoodsController {
     }
 
     /**
-     * 获取商品的信息
+     * 保存商品的信息
      * @return
      */
     @CrossOrigin
@@ -103,6 +117,26 @@ public class GoodsController {
            sum+= g.getSum();
         }
         return ResultFactory.buildSuccessResult(sum);
+    }
 
+    /**
+     * 获取商品信息-新增记录时用于选择已配置好的商品
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getGoodsInfoList", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<GoodsParam> getGoodsInfoList(@RequestBody Map map){
+        List<GoodsParam> goodsParamList=new ArrayList<>();
+        List<Goodsinfo> list = iGoodsinfoService.selectByMap(map);
+        for (Goodsinfo goodsinfo:list){                                  //整理好数据返回给前端
+            String tradeName = goodsinfo.getTradeName();
+            GoodsParam test=new GoodsParam();
+            test.setValue(tradeName);                         //value和label供前端选择
+            test.setLabel(tradeName);
+            goodsParamList.add(test);
+        }
+        return goodsParamList;
     }
 }

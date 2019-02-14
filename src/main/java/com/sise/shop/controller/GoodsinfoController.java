@@ -74,4 +74,19 @@ public class GoodsinfoController {
         }
         return null;
     }
+    /**
+     * 删除商品的信息
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/deleteGoodsInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result deleteGoodsInfo(@RequestBody Map map){
+
+        boolean goodsInfoId = iGoodsinfoService.deleteById(MapUtils.getString(map, "goodsInfoId"));
+        if(goodsInfoId){
+            return ResultFactory.buildSuccessResult("删除成功");
+        }else
+            return ResultFactory.buildFailResult("失败");
+    }
 }

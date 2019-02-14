@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author yangzhenhua
  * @since 2019-02-13
  */
-public class Goodsinfo extends Model<Goodsinfo> {
+public class Goodsinfo extends Model<Goodsinfo>  implements java.io.Serializable  {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,11 +41,36 @@ public class Goodsinfo extends Model<Goodsinfo> {
      * 利润
      */
     private Integer profit;
+    /**
+     * 商品来源
+     */
+    private String goodFrom;
+    /**
+     * 存放位置
+     */
+    private String location;
+
+    public String getGoodFrom() {
+        return goodFrom;
+    }
+
+    public void setGoodFrom(String goodFrom) {
+        this.goodFrom = goodFrom;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     /**
      * 商品信息Id
      */
     @TableId
+
     private String goodsInfoId;
 
     public String getUserId() {
