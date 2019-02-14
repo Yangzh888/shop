@@ -2,7 +2,6 @@ package com.sise.shop.utilis;
 
 import org.apache.commons.collections4.MapUtils;
 import org.thymeleaf.util.StringUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +25,15 @@ public class shopUtils {
         Date date = formatter.parse(source);
         return date;
     }
-
+/**
+ * 将时间格式转换成字符串
+ */
+public static String dataToString( Date data){
+    String fmt = "yyyy-MM-dd:hh mm ";
+    SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+    String dateStr = sdf.format(data);
+    return dateStr;
+}
     /**
      * 获取UUid的值
      *
