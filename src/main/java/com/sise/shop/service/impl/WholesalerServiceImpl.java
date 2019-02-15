@@ -40,7 +40,7 @@ private WholesalerMapper wholesalerMapper;
             Integer insert = wholesalerMapper.insert(wholesaler);
             if(insert<0)return false;
         }else{
-            Integer integer = wholesalerMapper.updateById(wholesaler);
+            Integer integer = wholesalerMapper.updateAllColumnById(wholesaler);
             if(integer<0)return false;
         }
         return true;

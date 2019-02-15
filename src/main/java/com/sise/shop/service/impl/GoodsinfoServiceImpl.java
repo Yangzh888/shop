@@ -33,6 +33,7 @@ public class GoodsinfoServiceImpl extends ServiceImpl<GoodsinfoMapper, Goodsinfo
         String userId = shopUtils.getUserId(map);
         BeanUtils.populate(goodsinfo,form);
         if(goodsinfo.getUserId().isEmpty()){
+            goodsinfo.setNumber(0);
             goodsinfo.setUserId(userId);
             goodsinfo.setGoodsInfoId(shopUtils.getUuid());
             goodsinfoMapper.insert(goodsinfo);

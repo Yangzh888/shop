@@ -24,7 +24,7 @@ public interface IGoodsService extends IService<Goods> {
     List<Goods> getGoodsInfo(Map map);
 
     /**
-     * 保存或者更新商品
+     * 保存或者更新商品出入库记录
      * @param map
      */
     void saveGoods(Map map) throws InvocationTargetException, IllegalAccessException;

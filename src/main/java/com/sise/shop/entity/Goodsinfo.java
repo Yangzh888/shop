@@ -42,20 +42,33 @@ public class Goodsinfo extends Model<Goodsinfo>  implements java.io.Serializable
      */
     private Integer profit;
     /**
-     * 商品来源
+     * 警告库存
      */
-    private String goodFrom;
+    private Integer warmingNumber;
     /**
      * 存放位置
      */
     private String location;
 
-    public String getGoodFrom() {
-        return goodFrom;
+    /**
+     * 商品数量
+     */
+    public Integer number;
+
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setGoodFrom(String goodFrom) {
-        this.goodFrom = goodFrom;
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Integer getWarmingNumber() {
+        return warmingNumber;
+    }
+
+    public void setWarmingNumber(Integer warmingNumber) {
+        this.warmingNumber = warmingNumber;
     }
 
     public String getLocation() {

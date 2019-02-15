@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 商品表 前端控制器
+ * 商品出入库表 前端控制器
  * </p>
  *
  * @author yangzhenhua
@@ -65,7 +65,6 @@ public class GoodsController {
         wrapper.like("tradeName",selectWord,SqlLike.DEFAULT);
         wrapper.or();
         wrapper.like("identifier",selectWord,SqlLike.DEFAULT);
-
         }
         Page<Goods> list=goods.selectPage(page,wrapper);
         return list;
@@ -78,7 +77,7 @@ public class GoodsController {
     @CrossOrigin
     @RequestMapping(value = "/saveGoods", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Page<Goods>  saveGoods(@RequestBody Map map) throws InvocationTargetException, IllegalAccessException {
+    public Result  saveGoods(@RequestBody Map map) throws InvocationTargetException, IllegalAccessException {
 
         iGoodsService.saveGoods(map);
         return null;
@@ -131,10 +130,9 @@ public class GoodsController {
         List<GoodsParam> goodsParamList=new ArrayList<>();
         List<Goodsinfo> list = iGoodsinfoService.selectByMap(map);
         for (Goodsinfo goodsinfo:list){                                  //整理好数据返回给前端
-            String tradeName = goodsinfo.getTradeName();
             GoodsParam test=new GoodsParam();
-            test.setValue(tradeName);                         //value和label供前端选择
-            test.setLabel(tradeName);
+            test.setValue(goodsinfo.getGoodsInfoId());                         //value和label供前端选择
+            test.setLabel(goodsinfo.getTradeName());
             goodsParamList.add(test);
         }
         return goodsParamList;

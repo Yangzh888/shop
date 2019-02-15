@@ -1,6 +1,8 @@
 package com.sise.shop.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -58,6 +60,7 @@ public class Wholesaler extends Model<Wholesaler> implements java.io.Serializabl
     /**
      * ID
      */
+    @TableId
     private String wholesalerId;
 
     /**

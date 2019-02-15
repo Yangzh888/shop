@@ -73,6 +73,18 @@ public class Goods extends Model<Goods>  implements java.io.Serializable  {
      * 数量
      */
     private Integer quantity;
+/**
+ * 区分出库还是入库
+ */
+private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     /**
      * 总价
