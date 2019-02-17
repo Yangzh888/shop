@@ -4,6 +4,7 @@ import com.sise.shop.entity.Others;
 import com.baomidou.mybatisplus.service.IService;
 import com.sise.shop.utilis.result.Result;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +25,19 @@ public interface IOthersService extends IService<Others> {
      * @param formLabelAlign
      * @return
      */
-    public  Result saveReadyDo(Map formLabelAlign);
+    public  Result saveReadyDo(Map formLabelAlign) throws InvocationTargetException, IllegalAccessException;
+
+    /**
+     * 通过待办ID修改待办的状态
+     * @param map
+     * @return
+     */
+    Result changeStatus(Map map);
+
+    /**
+     * 批量修改待办的状态
+     * @param map
+     * @return
+     */
+    Result changeBatchStatus(Map map);
 }

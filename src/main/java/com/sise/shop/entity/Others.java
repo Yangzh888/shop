@@ -64,6 +64,20 @@ public class Others extends Model<Others> implements java.io.Serializable  {
     @TableId
     private String othersId;
 
+    /**
+     * 状态
+     * @return
+     */
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getUserId() {
         return userId;
     }

@@ -1,6 +1,8 @@
 package com.sise.shop.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sise.shop.entity.Budget;
@@ -9,12 +11,17 @@ import com.sise.shop.service.IOthersService;
 import com.sise.shop.utilis.MapRequestVO;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
+import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -48,14 +55,14 @@ public class OthersController {
     }
 
     /**
-     * 保存代办信息
+     * 简单保存代办信息
      * @param map
      * @return
      */
     @CrossOrigin
     @RequestMapping(value = "/saveReadyDo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result saveReadyDo(@RequestBody Map map){
+    public Result saveReadyDo(@RequestBody Map map) throws InvocationTargetException, IllegalAccessException {
 
         Result result= iOthersService.saveReadyDo(map);
         return result;
@@ -85,11 +92,40 @@ public class OthersController {
     @ResponseBody
     public Page<Others> selectPage(@RequestBody Map map){
         Others others = new Others();
-        String userId = (String) map.get("userId");
-        others.setUserId(userId);
         Page<Others> page = new Page<Others>();
         EntityWrapper<Others> eWrapper = new EntityWrapper<Others>(others);
+        eWrapper.eq("userId",shopUtils.getUserId(map));
+        eWrapper.eq("status",MapUtils.getString(map,"status"));               //通过前段传来的map判断要查询什么状态下的待办信息
+        String selectWord = MapUtils.getString(map, "selectWord");
+        if(!StringUtils.isEmpty(selectWord))
+        {
+            eWrapper.like("title",selectWord,SqlLike.DEFAULT);
+        }
         Page<Others> othersList = others.selectPage(page,eWrapper);
         return  othersList;
+    }
+
+    /**
+     * 根据OthersID更新状态
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/changeStatus", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result changeStatus(@RequestBody Map map){
+        Result result=iOthersService.changeStatus(map);
+      return result;
+    }
+
+    /**
+    * 批量通过othersIdList更新状态
+    */
+    @CrossOrigin
+    @RequestMapping(value = "/changeBatchStatus", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result changeBatchStatus(@RequestBody Map map){
+        Result result=iOthersService.changeBatchStatus(map);
+        return result;
     }
 }

@@ -15,4 +15,11 @@
         <result column="othersPhone" property="othersPhone" />
     </resultMap>
 
+    <update id="changeBatchStatus" parameterType="java.util.List">
+        update others set status = #{status} where othersId in
+        <foreach separator="," index="index" item="item" collection="list" close=")" open="(">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>
