@@ -7,18 +7,20 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
  * <p>
  *  服务实现类
  * </p>
- *
+ *收支记录Service实现类
  * @author yangzhenhua
  * @since 2019-01-03
  */
@@ -38,24 +40,31 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         return budgetMapper.selectByUserIdLimit7(userId);
     }
 
-    @Autowired
-    private IBudgetService iBudgetService;
     @Override
-    public Result saveBudget(Map map) {
+    public Result deleteBudgetById(String budgetId) {
+        Integer integer = budgetMapper.deleteById(budgetId);
+        if(integer>0){
+            return ResultFactory.buildSuccessResult("删除成功"+integer+"条记录");
+        } else {
+            return ResultFactory.buildFailResult("删除失败，请重新操作");
+        }
+    }
+    @Override
+    public Result saveBudget(Map map) throws InvocationTargetException, IllegalAccessException {
         String userId = (String) map.get("userId");
-        Map formMap = (Map) map.get("form");
-        String  creatTime = (String) formMap.get("createTime");
-        int inSum= Integer.parseInt((String) formMap.get("inSum"));
-        int outSum = Integer.parseInt((String) formMap.get("outSum"));
-        String memo= (String) formMap.get("memo");
+        Map form = (Map) map.get("form");
+
         Budget budget = new Budget();
+        BeanUtils.populate(budget,form);
+        if(budget.getBudgetId().isEmpty()){
         budget.setUserId(userId);
-        budget.setCreateTime(creatTime);
-        budget.setInSum(inSum);
-        budget.setOutSum(outSum);
-        budget.setMemo(memo);
         budget.setBudgetId(shopUtils.getUuid());
-        iBudgetService.insert(budget);
-        return ResultFactory.buildSuccessResult("新增成功");
+        budgetMapper.insert(budget);
+            return ResultFactory.buildSuccessResult("新增成功一条数据");}
+        else {
+            budgetMapper.updateById(budget);
+            return ResultFactory.buildSuccessResult("更新成功1条数据");
+        }
+
     }
 }

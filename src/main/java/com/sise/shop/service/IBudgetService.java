@@ -4,6 +4,7 @@ import com.sise.shop.entity.Budget;
 import com.baomidou.mybatisplus.service.IService;
 import com.sise.shop.utilis.result.Result;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public interface IBudgetService extends IService<Budget> {
      * @param map
      * @return
      */
-    Result saveBudget(Map map);
+    Result saveBudget(Map map) throws InvocationTargetException, IllegalAccessException;
 
     List<Budget> selectByUserId(String userId);
 
@@ -32,4 +33,11 @@ public interface IBudgetService extends IService<Budget> {
      * @return
      */
     List<Budget> selectByUserIdLimit7(String userId);
+
+    /**
+     * 通过ID删除该条记录
+     * @param budgetId
+     * @return
+     */
+    Result deleteBudgetById(String budgetId);
 }

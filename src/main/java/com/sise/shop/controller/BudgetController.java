@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.thymeleaf.util.StringUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class BudgetController {
     @CrossOrigin
     @RequestMapping(value = "/saveBudget", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result saveBudget( @RequestBody Map map){
+    public Result saveBudget( @RequestBody Map map) throws InvocationTargetException, IllegalAccessException {
         Result result = iBudgetService.saveBudget(map);
         return result;
     }
@@ -113,5 +114,18 @@ public class BudgetController {
         }
         Page<Budget> budgetList = budget.selectPage(page,eWrapper);
         return  budgetList;
+    }
+    /**
+     * 查询收入支出分页数据
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/deleteBudgetById", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result deleteBudgetById( @RequestBody Map map){
+        String budgetId = MapUtils.getString(map, "budgetId");
+        Result result=iBudgetService.deleteBudgetById(budgetId);
+        return  null;
     }
 }
