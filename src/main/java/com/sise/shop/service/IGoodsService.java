@@ -28,4 +28,14 @@ public interface IGoodsService extends IService<Goods> {
      * @param map
      */
     void saveGoods(Map map) throws InvocationTargetException, IllegalAccessException;
+     int getGoodsNumber(String userId);
+     int getGoodsOutNumber(String userId);
+     int getGoodsOutTotal(String userId);
+
+    /**
+     * 获取订单分析数据
+     * @param userId
+     * @return
+     */
+    List<Map> getOrderInfo(String userId);
 }

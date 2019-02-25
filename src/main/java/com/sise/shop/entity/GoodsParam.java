@@ -20,6 +20,16 @@ public class GoodsParam {
         this.label = label;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /*商品信息的ID*/
+    private  String id;
     private String value;
     private String label;
 }

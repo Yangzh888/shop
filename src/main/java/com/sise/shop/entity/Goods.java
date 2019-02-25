@@ -73,6 +73,20 @@ public class Goods extends Model<Goods>  implements java.io.Serializable  {
      * 数量
      */
     private Integer quantity;
+
+    public String getGoodsInfoId() {
+        return goodsInfoId;
+    }
+
+    public void setGoodsInfoId(String goodsInfoId) {
+        this.goodsInfoId = goodsInfoId;
+    }
+
+    /**
+     * 商品信息表Id
+
+     */
+    private String goodsInfoId;
 /**
  * 区分出库还是入库
  */

@@ -7,8 +7,6 @@ public class MapRequestVO {
     private Map<String,String> map;
 
 
-
-
     public Map<String, String> getMap() {
         return map;
     }

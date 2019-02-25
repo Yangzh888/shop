@@ -125,6 +125,9 @@ public class UserinfoController {
         Userinfo u=new Userinfo();
         Map userInfoMap= (Map) map.get("form");
         BeanUtils.populate(u,userInfoMap);
+        Userinfo userinfo = iUserinfoService.selectById(u.getUserId());
+        u.setPassword(userinfo.getPassword());
+        u.setForgetAns(userinfo.getForgetAns());
         boolean update = iUserinfoService.updateById(u);
         if(update==true){
             return ResultFactory.buildSuccessResult("更新成功");

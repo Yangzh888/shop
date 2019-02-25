@@ -24,21 +24,6 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
     List<Userinfo> checekLogin(@Param("userId")String userId, @Param("password")String password);
 
 
-    @Insert("insert into users(name,age) values(#{name},#{age})")
-    public void insertT(Userinfo user);
-
-    @Delete("delete from users where id=#{id}")
-    public void deleteById(int id);
-
-    @Update("update users set name=#{name},age=#{age} where id=#{id}")
-    public void updateT(Userinfo user);
-
-    @Select("select * from users where id=#{id}")
-    public Userinfo getUser(int id);
-
-    @Select("select * from users")
-    public List<Userinfo> getAllUsers();
-
     @Select("update userinfo set password=#{newPassWord} where userId=#{userId}")
     void updatePassword(@Param("newPassWord")String newPassWord,@Param("userId")String userId);
 }

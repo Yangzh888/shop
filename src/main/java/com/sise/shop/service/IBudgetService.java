@@ -40,4 +40,12 @@ public interface IBudgetService extends IService<Budget> {
      * @return
      */
     Result deleteBudgetById(String budgetId);
+
+    int getAllTradeNumber(String userId);
+    int getAllTradeTotal(String userId);
+    int getAllTradeProfitTotal(String userId);
+    int getTradeGetProfitTotal(String userId);
+    int getAllwholesalerNumber(String userId);
+
+
 }
