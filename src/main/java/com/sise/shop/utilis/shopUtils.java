@@ -28,8 +28,8 @@ public class shopUtils {
 /**
  * 将时间格式转换成字符串
  */
-public static String dataToString( Date data){
-    String fmt = "yyyy-MM-dd:hh mm ";
+public static String dateTostring(Date data){
+    String fmt = "yyyy-MM-dd hh:mm:ss";
     SimpleDateFormat sdf = new SimpleDateFormat(fmt);
     String dateStr = sdf.format(data);
     return dateStr;

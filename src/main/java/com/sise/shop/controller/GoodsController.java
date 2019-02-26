@@ -71,7 +71,7 @@ public class GoodsController {
     }
 
     /**
-     * 保存商品的信息
+     * 保存商品出入库的信息
      * @return
      */
     @CrossOrigin
@@ -79,12 +79,12 @@ public class GoodsController {
     @ResponseBody
     public Result  saveGoods(@RequestBody Map map) throws InvocationTargetException, IllegalAccessException {
 
-        iGoodsService.saveGoods(map);
-        return null;
+        Result result = iGoodsService.saveGoods(map);
+        return result;
     }
 
     /**
-     * 删除商品的信息
+     * 删除出入库记录
      * @return
      */
     @CrossOrigin

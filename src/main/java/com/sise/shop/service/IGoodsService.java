@@ -2,6 +2,7 @@ package com.sise.shop.service;
 
 import com.sise.shop.entity.Goods;
 import com.baomidou.mybatisplus.service.IService;
+import com.sise.shop.utilis.result.Result;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -27,7 +28,7 @@ public interface IGoodsService extends IService<Goods> {
      * 保存或者更新商品出入库记录
      * @param map
      */
-    void saveGoods(Map map) throws InvocationTargetException, IllegalAccessException;
+    Result saveGoods(Map map) throws InvocationTargetException, IllegalAccessException;
      int getGoodsNumber(String userId);
      int getGoodsOutNumber(String userId);
      int getGoodsOutTotal(String userId);

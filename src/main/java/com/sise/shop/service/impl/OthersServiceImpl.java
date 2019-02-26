@@ -4,12 +4,10 @@ import com.sise.shop.entity.Others;
 import com.sise.shop.mapper.OthersMapper;
 import com.sise.shop.service.IOthersService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.sise.shop.utilis.CommonConstant;
 import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 
@@ -74,5 +72,22 @@ public class OthersServiceImpl extends ServiceImpl<OthersMapper, Others> impleme
         }
         Integer integer = othersMapper.changeBatchStatus(status,list);
         return integer>0? ResultFactory.buildSuccessResult("操作成功"+integer+"条数据"):ResultFactory.buildFailResult("操作失败");
+    }
+
+    /**
+     * 预警信息-新增待办
+     */
+    public boolean insertReadDo(String userId,String title ,String memo){
+        String createTime = shopUtils.dateTostring(new Date());
+        String uuid = shopUtils.getUuid();
+        Others others=new Others();
+        others.setTitle(title);
+        others.setCreateTime(createTime);
+        others.setUserId(userId);
+        others.setOthersId(uuid);
+        others.setMemo(memo);
+        others.setStatus("unread");
+        Integer insert = othersMapper.insert(others);
+        return  insert>0?true:false;
     }
 }

@@ -40,4 +40,14 @@ public interface IOthersService extends IService<Others> {
      * @return
      */
     Result changeBatchStatus(Map map);
+
+    /**
+     *
+     * @param userId
+     * @param title  待办的标题
+     * @param memo   待办的内容
+     * @return
+     */
+
+    public boolean insertReadDo(String userId,String title ,String memo);
 }

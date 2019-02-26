@@ -34,8 +34,8 @@ private WholesalerMapper wholesalerMapper;
         if(MapUtils.getString(wholesalerInfo,"wholesalerId").isEmpty()){
             wholesaler.setUserId(shopUtils.getUserId(map));  //将关联属性set进去
             wholesaler.setWholesalerId(shopUtils.getUuid());
-            String a=shopUtils.dataToString(new Date());
-            wholesaler.setCreateTime(shopUtils.dataToString(new Date()));
+            String a=shopUtils.dateTostring(new Date());
+            wholesaler.setCreateTime(shopUtils.dateTostring(new Date()));
             Integer insert = wholesalerMapper.insert(wholesaler);
             if(insert<0)return false;
         }else{

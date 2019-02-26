@@ -7,6 +7,8 @@ import com.sise.shop.mapper.GoodsinfoMapper;
 import com.sise.shop.service.IGoodsService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.sise.shop.utilis.CommonConstant;
+import com.sise.shop.utilis.result.Result;
+import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -33,6 +35,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private GoodsMapper goodsMapper;
 @Resource
 private GoodsinfoMapper goodsinfoMapper;
+    @Resource
+    private OthersServiceImpl othersService;
     @Override
     public List<Goods> getGoodsInfo(Map map) {
 
@@ -42,44 +46,83 @@ private GoodsinfoMapper goodsinfoMapper;
     }
 
     @Override
-    public void saveGoods(Map map) throws InvocationTargetException, IllegalAccessException {
+    public Result saveGoods(Map map) throws InvocationTargetException, IllegalAccessException {
         String userId = shopUtils.getUserId(map);
         String uuid = shopUtils.getUuid();
         Map goodsMap= (Map) map.get(CommonConstant.COMMONCONSTANT_FROM);
         String goodsId = MapUtils.getString(goodsMap, "goodsId");   //取出唯一Id判断是需要更新还是新增数据
         Goods goods=new Goods();
         BeanUtils.populate(goods,goodsMap);
-        goods.setGoodsInfoId(goods.getTradeName());               /* 将商品信息Id   set进去     理由看下面注释*/
-        if(goods.getStatus().equals("come")){
-            //goods.getTradeName()获取到的goodsInfo里面的商品ID。--因为GoodsParam中value存进去的是商品的ID
-            Goodsinfo goodsinfo = goodsinfoMapper.selectById(goods.getTradeName());
-            goods.setTradeName(goodsinfo.getTradeName());    //查出名称重新SET进去，最后更新当前出入库记录
-            Integer number = goodsinfo.getNumber();
-            number=number+goods.getQuantity();
-            goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(),number);
-        }else{
-            //goods.getTradeName()获取到的goodsInfo里面的商品ID。--因为GoodsParam中value存进去的是商品的ID
-            Goodsinfo goodsinfo = goodsinfoMapper.selectById(goods.getTradeName());
-            goods.setTradeName(goodsinfo.getTradeName());    //查出名称重新SET进去，最后更新当前出入库记录
-            Integer number = goodsinfo.getNumber();
-            number=number-goods.getQuantity();
-            goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(),number);
-        }
         Integer price = goods.getPrice();                   //获取单价和数量得到总额
         Integer quantity = goods.getQuantity();
         Integer sum=price*quantity;
         goods.setSum(sum);
         String orderNumber = shopUtils.getOrderNumber(goods.getCreateTime());
         if(goodsId.isEmpty()){
+            Goodsinfo goodsinfo = goodsinfoMapper.selectById(goods.getTradeName());//新增操作时前端传来的是goods.getTradeName()商品表里面的ID
+
+            if(goods.getStatus().equals("come")){
+                Integer number = goodsinfo.getNumber();
+                number=number+goods.getQuantity();
+                goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(),number);
+            }else{
+                Integer number = goodsinfo.getNumber();
+                if(number<goods.getQuantity()){
+                    return ResultFactory.buildFailResult("仓库数量只有"+number+"个,无法出库");
+                }
+                number=number-goods.getQuantity();
+                goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(),number);
+
+                //预警判断
+                Integer warmingNumber = goodsinfo.getWarmingNumber();
+                if(warmingNumber>number){//如果现有数量小于预警数量，则新增一条入库待办。
+                    othersService.insertReadDo(userId,"《入库通知》","你的商品"+goodsinfo.getTradeName()+"库存数量已不足，请及时进货");
+                }
+            }
             goods.setIdentifier(orderNumber);
             goods.setGoodsId(uuid);
             goods.setUserId(userId);
             goodsMapper.insert(goods);
         }else{
+            Goodsinfo goodsinfo = goodsinfoMapper.selectById(goods.getGoodsInfoId());//更新操作时good表里面已有goodsInfoId信息
+            //只要是更新数据而不是插入数据，都先将原有数据回滚
+            this.rollBackNumber(goods.getGoodsId(), goods.getGoodsInfoId());
+            if(goods.getStatus().equals("come")){
+                Integer number = goodsinfo.getNumber();
+                number=number+goods.getQuantity();
+                goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(),number);
+            }else{
+                Integer number = goodsinfo.getNumber();
+                if(number<goods.getQuantity()){
+                    return ResultFactory.buildFailResult("原来的仓库数量不足，只有"+number+"个,无法改为出库");
+                }
+                number=number-goods.getQuantity();
+                goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(),number);
+            }
             goodsMapper.updateById(goods);
         }
-
+return ResultFactory.buildSuccessResult("操作成功");
     }
+
+    /**
+     * 回滚商品原来的数量
+     */
+    private boolean rollBackNumber(String goodsId,String goodsInfoId){
+        Goodsinfo goodsinfo = goodsinfoMapper.selectById(goodsInfoId);
+        Goods goods=goodsMapper.selectById(goodsId);
+        Integer number=goodsinfo.getNumber();
+       if( goods.getStatus().equals("come")){                     //如果是入库即减回去，出库则加回去达到回滚效果
+                    number=number-goods.getQuantity();
+       }else {
+           number=number+goods.getQuantity();
+       }
+       goodsinfo.setNumber(number);
+        Integer integer = goodsinfoMapper.updateById(goodsinfo);
+        return integer>0?true : false;
+    }
+
+
+
     /**
      * 查询所有订单的总数量
      * @param userId
