@@ -42,4 +42,5 @@ public interface IWholesalerService extends IService<Wholesaler> {
      */
     List<Map> getWholesalerInfoList(String userId);
 
+
 }

@@ -1,6 +1,8 @@
 package com.sise.shop.service.impl;
 
 import com.sise.shop.entity.Wholesaler;
+import com.sise.shop.mapper.GoodsMapper;
+import com.sise.shop.mapper.GoodsinfoMapper;
 import com.sise.shop.mapper.WholesalerMapper;
 import com.sise.shop.service.IWholesalerService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -25,7 +27,8 @@ import java.util.*;
 public class WholesalerServiceImpl extends ServiceImpl<WholesalerMapper, Wholesaler> implements IWholesalerService {
 @Resource
 private WholesalerMapper wholesalerMapper;
-
+    @Resource
+    private GoodsMapper goodsMapper;
     @Override
     public boolean saveWholesaler(Map map) throws InvocationTargetException, IllegalAccessException {
         Wholesaler wholesaler=new Wholesaler();
@@ -126,4 +129,6 @@ private WholesalerMapper wholesalerMapper;
         }
         return resultList;
     }
+
+
 }
