@@ -32,7 +32,7 @@ public interface IBudgetService extends IService<Budget> {
      * @param userId
      * @return
      */
-    List<Budget> selectByUserIdLimit7(String userId);
+    List<Map> selectByUserIdLimit7(String userId);
 
     /**
      * 通过ID删除该条记录
@@ -47,5 +47,18 @@ public interface IBudgetService extends IService<Budget> {
     int getTradeGetProfitTotal(String userId);
     int getAllwholesalerNumber(String userId);
 
+    /**
+     * 获取首页--图表季度的营业额
+     * @param userId
+     * @return
+     */
+    List<Map> getQuarterInfo(String userId,String year);
 
+    /**
+     * 获取某一年某一月的图表信息
+     * @param userId
+     * @param date  年月  例如：2019-01
+     * @return
+     */
+    List<Map> getOneMonthComeAndOut(String userId, String date);
 }

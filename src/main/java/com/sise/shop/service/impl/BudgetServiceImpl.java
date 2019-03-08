@@ -13,6 +13,7 @@ import com.sise.shop.utilis.result.Result;
 import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
@@ -43,7 +44,7 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
     }
 
     @Override
-    public List<Budget> selectByUserIdLimit7(String userId) {
+    public List<Map> selectByUserIdLimit7(String userId) {
         return budgetMapper.selectByUserIdLimit7(userId);
     }
 
@@ -63,7 +64,7 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         Map form = (Map) map.get("form");
         Budget budget = new Budget();
         BeanUtils.populate(budget, form);
-        if (budget.getBudgetId().isEmpty()) {
+        if (budget.getBudgetId()==null) {
             budget.setUserId(userId);
             budget.setBudgetId(shopUtils.getUuid());
             budgetMapper.insert(budget);
@@ -98,7 +99,10 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         for (Goodsinfo g : goodsinfoList) {
             if (g.getNumber() > 0) {
                 Goods goods = goodsMapper.selectOneById(g.getGoodsInfoId(), userId);
-                Total = Total + goods.getPrice() * g.getNumber();
+                if(goods!=null){
+                    Total = Total + goods.getPrice() * g.getNumber();
+                }
+
             }
         }
         return Total;
@@ -116,9 +120,11 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         List<Goodsinfo> goodsinfoList = goodsinfoMapper.getAllTrade(userId);
         int profitTotal = 0;
         for (Goodsinfo g : goodsinfoList) {
+            Goods goods = goodsMapper.selectOneById(g.getGoodsInfoId(), userId);
             if (g.getNumber() > 0) {
-                Goods goods = goodsMapper.selectOneById(g.getGoodsInfoId(), userId);
+               if(goods!=null){
                 profitTotal = profitTotal + goods.getPrice() * g.getNumber() * g.getProfit() / 100;
+                 }
             }
         }
         return profitTotal;
@@ -158,5 +164,101 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
         }
         return b;
     }
+    /**
+     * 获取某年季度的营业额
+     * createTime是字符串，用like  %2019-01  数据库用sum获取insum的总额。这样获取每个月的总额
+     */
+    @Override
+    public List<Map> getQuarterInfo(String userId,String year) {
+        String month1=year+"-01";  String month2=year+"-02";String month3=year+"-03";String month4=year+"-04";
+        String month5=year+"-05";String month6=year+"-06";String month7=year+"-07";String month8=year+"-08";
+        String month9=year+"-09";String month10=year+"-10";String month11=year+"-11";String month12=year+"-12";
+        /**这是一段丑陋的代码*/
+        //1月
+        int Jua=0;
+        Object ob1=budgetMapper.getOneMonthAllSum(userId,month1);
+        if(ob1!=null){ Jua = Integer.parseInt(ob1.toString());}
+        //2月
+        int Feb=0;
+        Object ob2=budgetMapper.getOneMonthAllSum(userId,month2);
+        if(ob2!=null){ Feb = Integer.parseInt(ob2.toString());}
+        //3月
+        int Mar=0;
+        Object ob3=budgetMapper.getOneMonthAllSum(userId,month3);
+        if(ob3!=null){ Mar = Integer.parseInt(ob3.toString());}
+        //4月
+        int Apri=0;
+        Object ob4=budgetMapper.getOneMonthAllSum(userId,month4);
+        if(ob4!=null){ Apri = Integer.parseInt(ob4.toString());}
+        //5月
+        int May=0;
+        Object ob5=budgetMapper.getOneMonthAllSum(userId,month5);
+        if(ob5!=null){ May = Integer.parseInt(ob5.toString());}
+        //6月
+        int June=0;
+        Object ob6=budgetMapper.getOneMonthAllSum(userId,month6);
+        if(ob6!=null){ June = Integer.parseInt(ob6.toString());}
+        //7月
+        int July=0;
+        Object ob7=budgetMapper.getOneMonthAllSum(userId,month7);
+        if(ob7!=null){ June = Integer.parseInt(ob7.toString());}
+        //8月
+        int Aug=0;
+        Object ob8=budgetMapper.getOneMonthAllSum(userId,month8);
+        if(ob8!=null){ Aug = Integer.parseInt(ob8.toString());}
+        //9月
+        int Sept=0;
+        Object ob9=budgetMapper.getOneMonthAllSum(userId,month9);
+        if(ob9!=null){ Sept = Integer.parseInt(ob9.toString());}
+        //10月
+        int Oct=0;
+        Object ob10=budgetMapper.getOneMonthAllSum(userId,month10);
+        if(ob10!=null){ Oct = Integer.parseInt(ob10.toString());}
+        //11月
+        int Nove=0;
+        Object ob11=budgetMapper.getOneMonthAllSum(userId,month11);
+        if(ob11!=null){ Nove = Integer.parseInt(ob11.toString());}
+        //12月
+        int Dece=0;
+        Object ob12=budgetMapper.getOneMonthAllSum(userId,month12);
+        if(ob12!=null){ Dece = Integer.parseInt(ob12.toString());}
+Integer firstQuarter=Jua+Feb+Mar;
+        Integer secondQuarter=Apri+May+June;
+        Integer thirdQuarter=July+Aug+Sept;
+        Integer fourthQuarter=Oct+Nove+Dece;
+        int[] sumList={firstQuarter,secondQuarter,thirdQuarter,fourthQuarter};
+        List<Map> resultList=new ArrayList<>();
+
+        for (int i=0;i<4;i++){
+            Map map=new HashMap();
+            map.put("季度","第"+(i+1)+"季度");
+map.put("该季度营业额",sumList[i]);
+            resultList.add(map);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<Map> getOneMonthComeAndOut(String userId, String date) {
+        List<Map> list=budgetMapper.getOneMonthComeAndOut(userId,date);
+        List<Map> resultList=new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+            Map m=new HashMap();
+            Object createTime = list.get(i).get("createTime");
+            String time=String.valueOf(createTime);
+
+            Object allInSum = list.get(i).get("AllInSum");
+            Integer inSum = Integer.parseInt(allInSum.toString());
+
+            Object allOutSum = list.get(i).get("AllOutSum");
+            Integer outSum = Integer.parseInt(allOutSum.toString());
+            m.put("日期",time.substring(5,10));
+            m.put("当天收入",inSum);
+            m.put("当天支出",outSum);
+            resultList.add(m);
+        }
+        return resultList;
+    }
+
 
 }

@@ -10,6 +10,7 @@ import com.sise.shop.service.IBudgetService;
 import com.sise.shop.service.IGoodsService;
 import com.sise.shop.service.IWholesalerService;
 import com.sise.shop.utilis.result.Result;
+import com.sise.shop.utilis.result.ResultFactory;
 import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.thymeleaf.util.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.util.*;
 
 
 /**
@@ -71,7 +70,7 @@ public class BudgetController {
      * @return
      */
 
-    @CrossOrigin
+ /*   @CrossOrigin
     @RequestMapping(value = "/getEchartsInComeData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public List<EchartsEntityParam> getEchartsInComeData(@RequestBody Map map) {
@@ -87,24 +86,35 @@ public class BudgetController {
             echartsList.add(echarts);
         }
         return echartsList;
-    }
-
+    }*/
     @CrossOrigin
-    @RequestMapping(value = "/getEchartsOutComeData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/getEchartsComeAndOutData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<EchartsEntityParam> getEchartsOutComeData(@RequestBody Map map) {
+    public List<Map> getEchartsComeAndOutData(@RequestBody Map map) {
         String userId = (String) map.get("userId");
-        List<Budget> budgetList = iBudgetService.selectByUserIdLimit7(userId);
-        List<EchartsEntityParam> echartsList = new ArrayList<>();
-        for (Budget budget : budgetList) {
-            EchartsEntityParam echarts = new EchartsEntityParam();
-            String createTime = budget.getCreateTime();
-            String[] yyyyDDmm = createTime.split(" ");  //切割时间为yyyyDDmm hh:mm:ss
-            echarts.setName(yyyyDDmm[0]);
-            echarts.setValue(budget.getOutSum());
-            echartsList.add(echarts);
+        List<Map> budgetList = iBudgetService.selectByUserIdLimit7(userId);
+        List<Map> resultList = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            Map m = new HashMap();
+            //String time = budgetList.get(i).getCreateTime().substring(5, 9);
+
+            Object createTime = budgetList.get(i).get("createTime");
+            String Time = String.valueOf(createTime);
+            Object allInSum = budgetList.get(i).get("allInSum");
+            int inSum = 0, outSum = 0;
+            if (allInSum != null) {
+                inSum = Integer.parseInt(allInSum.toString());
+            }
+            Object allOutSum = budgetList.get(i).get("allOutSum");
+            if (allOutSum != null) {
+                outSum = Integer.parseInt(allOutSum.toString());
+            }
+            m.put("日期", Time.substring(5, 10));
+            m.put("当天收入", inSum);
+            m.put("当天支出", outSum);
+            resultList.add(m);
         }
-        return echartsList;
+        return resultList;
     }
 
     /**
@@ -120,7 +130,8 @@ public class BudgetController {
         Budget budget = new Budget();
         String userId = (String) map.get("userId");
         budget.setUserId(userId);
-        Page<Budget> page = new Page<Budget>();
+        Integer current = shopUtils.getCurrentByMap(map);
+        Page<Budget> page = new Page<Budget>(current, 8);
         EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget, "8");
         String selectWord = MapUtils.getString(map, "selectWord");              //判断是否有模糊查询参数
         if (!StringUtils.isEmpty(selectWord)) {
@@ -142,7 +153,7 @@ public class BudgetController {
     public Result deleteBudgetById(@RequestBody Map map) {
         String budgetId = MapUtils.getString(map, "budgetId");
         Result result = iBudgetService.deleteBudgetById(budgetId);
-        return null;
+        return result;
     }
 
 
@@ -218,9 +229,10 @@ public class BudgetController {
         int goodsOutTotal = iGoodsService.getGoodsOutTotal(userId);     //所有出库订单总金额
         orderInfo.put("goodsOutNumber", goodsOutNumber);
         orderInfo.put("goodsOutTotal", goodsOutTotal);
-        ResultMap.put("orderInfo",orderInfo);
+        ResultMap.put("orderInfo", orderInfo);
         return ResultMap;
     }
+
     /**
      * 数据分析---客户分析
      *
@@ -233,16 +245,57 @@ public class BudgetController {
     public Map getWholesalerInfo(@RequestBody Map map) {
         String userId = shopUtils.getUserId(map);
         Map ResultMap = new HashMap();
-        Integer allWholesalerNumber= iWholesalerService.getAllWholesalerNumber(userId);      //所有客户包括批发商的数量
+        Integer allWholesalerNumber = iWholesalerService.getAllWholesalerNumber(userId);      //所有客户包括批发商的数量
         Integer custmerNumber = iWholesalerService.getCustmerNumber(userId);              //客户的数量
         Integer wholesalerNumber = iWholesalerService.getWholesalerNumber(userId);       //批发商的数量
-        Map wholesalerInfo=new HashMap();
-        wholesalerInfo.put("allWholesalerNumber",allWholesalerNumber);
-        wholesalerInfo.put("custmerNumber",custmerNumber);
-        wholesalerInfo.put("wholesalerNumber",wholesalerNumber);
-        List<Map> wholesalerInfoList=iWholesalerService.getWholesalerInfoList(userId);     //图表的信息
-        ResultMap.put("wholesalerInfo",wholesalerInfo);
-        ResultMap.put("wholesalerInfoList",wholesalerInfoList);
+        Map wholesalerInfo = new HashMap();
+        wholesalerInfo.put("allWholesalerNumber", allWholesalerNumber);
+        wholesalerInfo.put("custmerNumber", custmerNumber);
+        wholesalerInfo.put("wholesalerNumber", wholesalerNumber);
+        List<Map> wholesalerInfoList = iWholesalerService.getWholesalerInfoList(userId);     //图表的信息
+        ResultMap.put("wholesalerInfo", wholesalerInfo);
+        ResultMap.put("wholesalerInfoList", wholesalerInfoList);
         return ResultMap;
+    }
+
+    /**
+     * 首页---季度营业额
+     *
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getQuarterInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<Map> getQuarterInfo(@RequestBody Map map) {
+        String userId = shopUtils.getUserId(map);
+        String year = MapUtils.getString(map, "year");
+        List<Map> list = iBudgetService.getQuarterInfo(userId, year);
+        return list;
+    }
+
+
+    /**
+     * 收支统计---按月统计
+     *
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getOneMonthComeAndOut", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result getOneMonthComeAndOut(@RequestBody Map map) {
+        String userId = shopUtils.getUserId(map);
+        String selectMonth = null;
+        selectMonth = MapUtils.getString(map, "selectMonth");            //2019年9月--前端对应传来的是2019-8-31日
+        if (selectMonth == null||selectMonth=="") {
+            Date date = new Date();
+            selectMonth = shopUtils.dateTostring(date).substring(0, 7);
+        }
+        List<Map> resultlist = iBudgetService.getOneMonthComeAndOut(userId, selectMonth);
+        if(resultlist.size()==0){
+            return ResultFactory.buildFailResult("数据为空");
+        }
+        return ResultFactory.buildSuccessResult(resultlist);
     }
 }
