@@ -27,7 +27,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     private UserinfoMapper userinfoMapper;
 
     @Override
-    public List<Userinfo> login(String userId, String password) {
+    public List<Userinfo> login(String password, String userId) {
         List<Userinfo> list = userinfoMapper.checekLogin(userId, password);
 
         if (list == null && list.isEmpty()) {
