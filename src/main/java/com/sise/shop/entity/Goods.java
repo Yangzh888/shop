@@ -91,6 +91,60 @@ public class Goods extends Model<Goods>  implements java.io.Serializable  {
  * 区分出库还是入库
  */
 private String status;
+private String statusToString;
+
+    /**
+     *新增下列关联关系-客户/批发商
+     * @return
+     */
+    private String wholesalerName;
+    private String wholesalerId;
+    private String customerId;
+    private String customerName;
+
+    public String getWholesalerName() {
+        return wholesalerName;
+    }
+
+    public void setWholesalerName(String wholesalerName) {
+        this.wholesalerName = wholesalerName;
+    }
+
+    public String getWholesalerId() {
+        return wholesalerId;
+    }
+
+    public void setWholesalerId(String wholesalerId) {
+        this.wholesalerId = wholesalerId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getStatusToString() {
+        return statusToString;
+    }
+
+    public void setStatusToString(String statusToString) {
+        this.statusToString = statusToString;
+    }
 
     public String getStatus() {
         return status;

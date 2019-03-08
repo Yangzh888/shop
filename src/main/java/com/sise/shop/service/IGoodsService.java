@@ -39,4 +39,12 @@ public interface IGoodsService extends IService<Goods> {
      * @return
      */
     List<Map> getOrderInfo(String userId);
+
+    /**
+     * 回滚商品数量
+     * @param goodsId
+     * @param goodsInfoId
+     * @return
+     */
+    public boolean rollBackNumber(String goodsId,String goodsInfoId);
 }

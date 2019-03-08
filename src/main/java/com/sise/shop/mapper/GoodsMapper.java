@@ -67,4 +67,5 @@ public interface GoodsMapper extends BaseMapper<Goods> {
     */
     @Select("SELECT * from goods WHERE userId=#{userId} AND status='out'")
     List<Map> getBudgetOutOrder(String userId);
+
 }
