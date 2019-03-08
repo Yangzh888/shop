@@ -92,7 +92,8 @@ public class OthersController {
     @ResponseBody
     public Page<Others> selectPage(@RequestBody Map map){
         Others others = new Others();
-        Page<Others> page = new Page<Others>();
+        Integer current = shopUtils.getCurrentByMap(map);
+        Page<Others> page = new Page<Others>(current,5);
         EntityWrapper<Others> eWrapper = new EntityWrapper<Others>(others);
         eWrapper.eq("userId",shopUtils.getUserId(map));
         eWrapper.eq("status",MapUtils.getString(map,"status"));               //通过前段传来的map判断要查询什么状态下的待办信息
