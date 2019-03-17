@@ -34,6 +34,6 @@ public interface WholesalerMapper extends BaseMapper<Wholesaler> {
     @Select("SELECT count(wholesalerId) from wholesaler WHERE  userId=#{userId} AND status='wholesaler'")
     Object getWholesalerNumber(@Param("userId")String userId);
 
-    @Select("SELECT * from wholesaler WHERE  userId=#{userId} AND status='wholesaler'")
+    @Select("SELECT * from wholesaler WHERE  userId=#{userId} ")
     List<Map> getwholesalerList(@Param("userId")String userId);
 }

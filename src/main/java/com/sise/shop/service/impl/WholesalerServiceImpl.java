@@ -124,7 +124,7 @@ private WholesalerMapper wholesalerMapper;
         for(int i=0;i<12;i++){
             Map m=new HashMap();
             m.put("月份",monthList[i]);
-            m.put("新增数量",monthValue[i]);
+            m.put("总数量",monthValue[i]);
             resultList.add(m);
         }
         return resultList;

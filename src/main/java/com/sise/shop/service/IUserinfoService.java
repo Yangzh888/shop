@@ -28,6 +28,7 @@ public interface IUserinfoService extends IService<Userinfo> {
      * @param userId
      * @return
      */
+
     List<Userinfo> checkUnqiue(String userId);
 
     /**

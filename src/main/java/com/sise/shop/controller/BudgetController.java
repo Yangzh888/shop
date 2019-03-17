@@ -69,24 +69,6 @@ public class BudgetController {
      * @param map
      * @return
      */
-
- /*   @CrossOrigin
-    @RequestMapping(value = "/getEchartsInComeData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public List<EchartsEntityParam> getEchartsInComeData(@RequestBody Map map) {
-        String userId = (String) map.get("userId");
-        List<Budget> budgetList = iBudgetService.selectByUserIdLimit7(userId);
-        List<EchartsEntityParam> echartsList = new ArrayList<>();
-        for (Budget budget : budgetList) {
-            EchartsEntityParam echarts = new EchartsEntityParam();
-            String createTime = budget.getCreateTime();
-            String[] yyyyDDmm = createTime.split(" ");  //切割时间为yyyyDDmm hh:mm:ss
-            echarts.setName(yyyyDDmm[0]);
-            echarts.setValue(budget.getInSum());
-            echartsList.add(echarts);
-        }
-        return echartsList;
-    }*/
     @CrossOrigin
     @RequestMapping(value = "/getEchartsComeAndOutData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
