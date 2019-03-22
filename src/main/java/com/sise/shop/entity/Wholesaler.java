@@ -68,6 +68,27 @@ public class Wholesaler extends Model<Wholesaler> implements java.io.Serializabl
      */
     private String status;
 
+    /**默认该字段为创建人Id*/
+    private String creator;
+    /**默认该字段为创建人姓名*/
+    private String updater;
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
     public String getUserId() {
         return userId;
     }

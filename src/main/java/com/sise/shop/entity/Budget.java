@@ -42,12 +42,12 @@ public class Budget extends Model<Budget> implements java.io.Serializable   {
     private Integer outSum;
 
     /**
-     * 创建人
+     * 创建人Id、
      */
     private String creator;
 
     /**
-     * 更新人
+     * 创建人姓名
      */
     private String updater;
 

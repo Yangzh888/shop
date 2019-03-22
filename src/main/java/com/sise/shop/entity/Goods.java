@@ -92,8 +92,21 @@ public class Goods extends Model<Goods>  implements java.io.Serializable  {
  */
 private String status;
 private String statusToString;
+    /**
+     * 创建人Id
+     */
+    private String creatorId;
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
 
     /**
+
      *新增下列关联关系-客户/批发商
      * @return
      */

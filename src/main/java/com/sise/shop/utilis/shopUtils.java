@@ -1,5 +1,7 @@
 package com.sise.shop.utilis;
 
+import com.sise.shop.utilis.result.Result;
+import com.sise.shop.utilis.result.ResultFactory;
 import org.apache.commons.collections4.MapUtils;
 import org.thymeleaf.util.StringUtils;
 
@@ -40,6 +42,13 @@ public static String dateTostring(Date data){
      */
     public static String getUserId(Map map) {
         String userId = MapUtils.getString(map, "userId");
+        if (!StringUtils.isEmpty(userId)) {
+            return userId;
+        }
+        return null;
+    }
+    public static String getUserSonId(Map map,String key) {
+        String userId = MapUtils.getString(map, key);
         if (!StringUtils.isEmpty(userId)) {
             return userId;
         }
@@ -91,7 +100,77 @@ public static String dateTostring(Date data){
            result.put(label,28);
         }return result;
     }
+    /**移除Map中值为空的键值对*/
+     public static void removeNullEntry(Map map) {
+                removeNullKey(map);
+                 removeNullValue(map);
+            }
+      /**移除键为空的键值对*/
+             public static void removeNullKey(Map map) {
+                Set set = map.keySet();
+               for (Iterator iterator = set.iterator(); iterator.hasNext(); ) {
+                       Object obj = (Object) iterator.next();
+                       remove(obj, iterator);
+                  }
+           }
+     /**移除值为空的键值对*/
+            public static void removeNullValue(Map map) {
+                Set set = map.keySet();
+               for (Iterator iterator = set.iterator(); iterator.hasNext(); ) {
+                        Object obj = (Object) iterator.next();
+                       Object value = (Object) map.get(obj);
+                       remove(value, iterator);
+                   }
+            }
 
+            private static void remove(Object obj, Iterator iterator) {
+                 if (obj instanceof String) {
+                       String str = (String) obj;
+                       if (str == null || str.trim().isEmpty()) {
+                               iterator.remove();
+                          }
+                  } else if (obj instanceof Collection) {
+                       Collection col = (Collection) obj;
+                       if (col == null || col.isEmpty()) {
+                              iterator.remove();
+                           }
 
+                  } else if (obj instanceof Map) {
+                       Map temp = (Map) obj;
+                       if (temp == null || temp.isEmpty()) {
+                                 iterator.remove();
+                            }
 
+                   } else if (obj instanceof Object[]) {
+                        Object[] array = (Object[]) obj;
+                        if (array == null || array.length <= 0) {
+                                 iterator.remove();
+                            }
+                    } else {
+                        if (obj == null) {
+                               iterator.remove();
+                            }
+                  }
+           }
+    /**
+     * 判断是否操作成功，传入一个Integer，大于0则操作成功，否则操作失败
+     */
+public static Result isSuccess(Integer integer,String successSting,String falseString){
+    if(integer>0){
+
+        return ResultFactory.buildSuccessResult(successSting);
+    }else{
+        return ResultFactory.buildFailResult(falseString);
+    }
+}
+    /**
+     * 判断是否操作成功，传入一个boolean，成功返回成功对象，失败返回失败对象
+     */
+    public static Result booleanIsSuccess (Boolean b,String successSting,String falseString){
+        if(b){
+            return ResultFactory.buildSuccessResult(successSting);
+        }else{
+            return ResultFactory.buildFailResult(falseString);
+        }
+    }
 }

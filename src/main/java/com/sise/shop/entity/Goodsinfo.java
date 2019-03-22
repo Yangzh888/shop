@@ -55,6 +55,27 @@ public class Goodsinfo extends Model<Goodsinfo>  implements java.io.Serializable
      */
     public Integer number;
 
+    /**默认该字段为创建人Id*/
+    private String creator;
+    /**默认该字段为创建人姓名*/
+    private String updater;
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
     public Integer getNumber() {
         return number;
     }

@@ -88,7 +88,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
                 //预警判断
                 Integer warmingNumber = goodsinfo.getWarmingNumber();
                 if (warmingNumber > number) {//如果现有数量小于预警数量，则新增一条入库待办。
-                    othersService.insertReadDo(userId, "《入库通知》", "你的商品《" + goodsinfo.getTradeName() + "》库存数量已不足，请及时进货");
+                    othersService.insertReadDo(userId, "《入库通知》", "商品《" + goodsinfo.getTradeName() + "》库存数量已不足，请及时进货",goods.getCreator(),"系统自动生成");
                 }
                 //关联客户
                 String customerId = MapUtils.getString(goodsMap, "customerId");

@@ -1,7 +1,9 @@
 package com.sise.shop.controller;
 
 
+import com.sise.shop.entity.Relationuserinfo;
 import com.sise.shop.entity.Userinfo;
+import com.sise.shop.service.IRelationuserinfoService;
 import com.sise.shop.service.IUserinfoService;
 import com.sise.shop.utilis.MapRequestVO;
 import com.sise.shop.utilis.result.Result;
@@ -32,11 +34,14 @@ import java.util.*;
 @RequestMapping("/api/userInfo")
 public class UserinfoController {
 
+
+    @Autowired
+    private IUserinfoService iUserinfoService;
+    @Autowired
+    private IRelationuserinfoService iRelationuserinfoService;
     /**
      * 测试
      */
-    @Autowired
-    private IUserinfoService iUserinfoService;
     @RequestMapping("/hello")
     public String helloHtml(HashMap<String, Object> map) {
         map.put("hello", "欢迎进入HTML页面");
@@ -51,7 +56,7 @@ public class UserinfoController {
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult, HttpSession httpSession) {
+    public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
@@ -65,8 +70,14 @@ public class UserinfoController {
                 String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
                 return ResultFactory.buildFailResult(message);
             } else {
-                Userinfo userinfo = iUserinfoService.selectById(userId);
-                return ResultFactory.buildSuccessResult(userinfo);
+
+                Relationuserinfo relationuserinfo = iRelationuserinfoService.selectById(userId);
+                Userinfo userinfo = iUserinfoService.selectById(relationuserinfo.getUserId());
+                Map resultMap=BeanUtils.describe(userinfo);
+                resultMap.put("userSonInfo",relationuserinfo);
+                shopUtils.removeNullEntry(resultMap);//移除键为空的数据
+                resultMap.remove("password");
+                return ResultFactory.buildSuccessResult(resultMap);
             }
         }
         String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
@@ -90,6 +101,7 @@ public class UserinfoController {
         }
         boolean insert = iUserinfoService.insert(userInfo);
         if(insert==true){
+            boolean b = iRelationuserinfoService.insertUserSonInfo(userInfo.getUserId(), userInfo.getUsername(), userInfo.getPassword(),shopUtils.dateTostring(new Date()));
             return ResultFactory.buildSuccessResult("注册成功");
         }else
         {
@@ -114,7 +126,7 @@ public class UserinfoController {
         return ResultFactory.buildSuccessResult(user);
     }
     /**
-     * 获取当前登录人的信息
+     * 更新当前登录人的信息
      * @param map
      * @return
      */
@@ -165,6 +177,26 @@ public class UserinfoController {
        }else{
            return ResultFactory.buildFailResult("问题答案不正确");
        }
+
+    }
+
+
+    /**
+     * 判断是否存在账号
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/checkIsExitUserId", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result  checkIsExitUserId( @RequestBody Map map) {
+        String userId = shopUtils.getUserId(map);
+        if( iRelationuserinfoService.selectById(userId)!=null){
+            Userinfo userinfo = iUserinfoService.selectById(userId);
+            return ResultFactory.buildSuccessResult(userinfo);
+        }else{
+            return ResultFactory.buildFailResult("账号不存在，如有疑问请联系管理员");
+        }
 
     }
 }

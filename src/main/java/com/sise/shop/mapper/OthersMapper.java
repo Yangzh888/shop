@@ -21,8 +21,8 @@ public interface OthersMapper extends BaseMapper<Others> {
     @Select("select * from others where userId=#{userId}")
     List<Others> queryOthersByUserId(String userId);
 
-    @Update("update others set status=#{status} where othersId=#{othersId}")
-    Integer updateStatus(@Param("othersId")String othersId,@Param("status") String status);
+    @Update("update others set status=#{status},relationUserInfoId=#{relationUserInfoId},relationUserInfoName=#{relationUserInfoName} where othersId=#{othersId}")
+    Integer updateStatus(@Param("othersId")String othersId,@Param("status") String status,@Param("relationUserInfoId")String relationUserInfoId,@Param("relationUserInfoName")String relationUserInfoName);
 
     Integer changeBatchStatus(@Param("status")String status,@Param("list")List list);
 }

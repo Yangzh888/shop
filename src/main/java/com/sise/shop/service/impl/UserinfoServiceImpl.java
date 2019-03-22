@@ -8,6 +8,7 @@ import com.sise.shop.utilis.shopUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -51,13 +52,15 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     @Override
     public boolean checkAnsToChangePassWord(Map map) {
         String userId = shopUtils.getUserId(map);
-        Map fromMap= (Map) map.get("changeForm");
+
         Userinfo userinfo = userinfoMapper.selectById(userId);
         String forgetAns = userinfo.getForgetAns();             //数据库存放的原有答案
-        String forgetAnsCheck = MapUtils.getString(fromMap, "forgetAnsCheck");   //用户传输过来的答案
+        String forgetAnsCheck = MapUtils.getString(map, "forgetAnsCheck");   //用户传输过来的答案
         if(forgetAns.equals(forgetAnsCheck)){
-            String newPassWord = MapUtils.getString(fromMap, "newPassWord");
-            userinfoMapper.updatePassword(newPassWord,userId);
+            String newPassWord = MapUtils.getString(map, "newPassWord");
+            byte[] sb = newPassWord.getBytes();
+            String password =DigestUtils.md5DigestAsHex(sb);
+            userinfoMapper.updatePassword(password,userId);
             return true;
         }else{
        return false;

@@ -57,7 +57,9 @@ public class OthersServiceImpl extends ServiceImpl<OthersMapper, Others> impleme
     public Result changeStatus(Map map) {
         String othersId = MapUtils.getString(map, "othersId");   //获取前端传来唯一ID
         String status = MapUtils.getString(map, "status");
-        Integer i=othersMapper.updateStatus(othersId,status);
+        String relationUserInfoId = MapUtils.getString(map, "relationUserInfoId");
+        String relationUserInfoName = MapUtils.getString(map, "relationUserInfoName");
+        Integer i=othersMapper.updateStatus(othersId,status,relationUserInfoId,relationUserInfoName);
         return i>0?ResultFactory.buildSuccessResult("更新成功"):ResultFactory.buildFailResult("更新失败");
     }
 
@@ -77,7 +79,7 @@ public class OthersServiceImpl extends ServiceImpl<OthersMapper, Others> impleme
     /**
      * 预警信息-新增待办
      */
-    public boolean insertReadDo(String userId,String title ,String memo){
+    public boolean insertReadDo(String userId,String title ,String memo,String creator,String updater){
         String createTime = shopUtils.dateTostring(new Date());
         String uuid = shopUtils.getUuid();
         Others others=new Others();
@@ -87,6 +89,8 @@ public class OthersServiceImpl extends ServiceImpl<OthersMapper, Others> impleme
         others.setOthersId(uuid);
         others.setMemo(memo);
         others.setStatus("unread");
+        others.setCreator(creator);
+        others.setUpdater(updater);
         Integer insert = othersMapper.insert(others);
         return  insert>0?true:false;
     }
