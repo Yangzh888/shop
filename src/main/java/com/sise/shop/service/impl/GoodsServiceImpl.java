@@ -71,7 +71,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
                 Integer number = goodsinfo.getNumber();
                 number = number + goods.getQuantity();
                 goodsinfoMapper.updateGoodsInfoNumber(goodsinfo.getGoodsInfoId(), number);
-
                 //关联批发商
                 String wholesalerId = MapUtils.getString(goodsMap, "wholesalerId");
                 String wholesalerName = wholesalerService.selectById(wholesalerId).getWholesalerName();

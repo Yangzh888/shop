@@ -50,27 +50,23 @@ public class UserinfoController {
 
     /**
      * 登录控制器，前后端分离用的不同协议和端口，所以需要加入@CrossOrigin支持跨域。
-     * 给VueLoginInfoVo对象加入@Valid注解，并在参数中加入BindingResult来获取错误信息。
      * 在逻辑处理中我们判断BindingResult知否含有错误信息，如果有错误信息，则直接返回错误信息。
      */
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Result login(@Valid @RequestBody Userinfo userInfo, BindingResult bindingResult) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public Result login( @RequestBody Userinfo userInfo, BindingResult bindingResult) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         if (bindingResult.hasErrors()) {
-            String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
-            return ResultFactory.buildFailResult(message);
+            return ResultFactory.buildFailResult("登陆失败，详细信息[%s]。");
         }
         if (!userInfo.getUserId().isEmpty()) {
             String password = userInfo.getPassword();
             String userId=userInfo.getUserId();
             List<Userinfo> login = iUserinfoService.login(password, userId);
             if (login==null||login.isEmpty()||login.size()==0) {
-                String message = String.format("登陆失败，详细信息[用户名或密码信息不正确]。");
-                return ResultFactory.buildFailResult(message);
-            } else {
-
+                return ResultFactory.buildFailResult("登陆失败，详细信息[用户名或密码信息不正确]。");
+            } else {                                                                                       //登录成功
                 Relationuserinfo relationuserinfo = iRelationuserinfoService.selectById(userId);
                 Userinfo userinfo = iUserinfoService.selectById(relationuserinfo.getUserId());
                 Map resultMap=BeanUtils.describe(userinfo);
@@ -80,8 +76,7 @@ public class UserinfoController {
                 return ResultFactory.buildSuccessResult(resultMap);
             }
         }
-        String message = String.format("登陆异常，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
-        return ResultFactory.buildFailResult(message);
+        return ResultFactory.buildFailResult("登陆异常，详细信息。");
     }
 
     /**
@@ -96,12 +91,13 @@ public class UserinfoController {
         String userId = userInfo.getUserId();
         //判断当前传过来的账户有没有被注册过(主键唯一性)
         List<Userinfo> userInfoList = iUserinfoService.checkUnqiue(userId);
-        if(userInfoList.size()>0){
+        if(userInfoList.size()>0){                                                                              //校验用户是否已经存在
           return ResultFactory.buildFailResult("注册失败，当前登录账户已被使用，请使用其他账户");
         }
-        boolean insert = iUserinfoService.insert(userInfo);
-        if(insert==true){
-            boolean b = iRelationuserinfoService.insertUserSonInfo(userInfo.getUserId(), userInfo.getUsername(), userInfo.getPassword(),shopUtils.dateTostring(new Date()));
+        boolean insert = iUserinfoService.insert(userInfo);                                                      //主表存放管理员信息
+        boolean b = iRelationuserinfoService.insertUserSonInfo(userInfo.getUserId(), userInfo.getUsername(),     //子表将管理员也存放登录信息
+                userInfo.getPassword(),shopUtils.dateTostring(new Date()));
+        if(insert&&b){
             return ResultFactory.buildSuccessResult("注册成功");
         }else
         {

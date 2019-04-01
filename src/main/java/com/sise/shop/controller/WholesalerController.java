@@ -41,8 +41,9 @@ private IWholesalerService iWholesalerService;
         Wholesaler wholesaler=new Wholesaler();
         String userId = shopUtils.getUserId(map);
         wholesaler.setUserId(userId);
+        Integer current = shopUtils.getCurrentByMap(map);
         wholesaler.setStatus(MapUtils.getString(map, "status"));  //区分是批发商还是客户
-        Page<Wholesaler> page=new Page<>();
+        Page<Wholesaler> page=new Page<>(current,10);
         EntityWrapper<Wholesaler> eWrapper=new EntityWrapper<>(wholesaler);
         String selectWord= MapUtils.getString(map,"selectWord");
         if(!StringUtils.isEmpty(selectWord)){        //存在关键字搜索即模糊查询

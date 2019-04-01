@@ -55,10 +55,10 @@ public class OthersServiceImpl extends ServiceImpl<OthersMapper, Others> impleme
 
     @Override
     public Result changeStatus(Map map) {
-        String othersId = MapUtils.getString(map, "othersId");   //获取前端传来唯一ID
+        String othersId = MapUtils.getString(map, "othersId");   //获取前端传来待办ID
         String status = MapUtils.getString(map, "status");
-        String relationUserInfoId = MapUtils.getString(map, "relationUserInfoId");
-        String relationUserInfoName = MapUtils.getString(map, "relationUserInfoName");
+        String relationUserInfoId = MapUtils.getString(map, "relationUserInfoId");           //更新人Id
+        String relationUserInfoName = MapUtils.getString(map, "relationUserInfoName");       //更新人姓名
         Integer i=othersMapper.updateStatus(othersId,status,relationUserInfoId,relationUserInfoName);
         return i>0?ResultFactory.buildSuccessResult("更新成功"):ResultFactory.buildFailResult("更新失败");
     }

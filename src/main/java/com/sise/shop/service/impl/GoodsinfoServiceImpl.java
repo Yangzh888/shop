@@ -36,11 +36,12 @@ public class GoodsinfoServiceImpl extends ServiceImpl<GoodsinfoMapper, Goodsinfo
             goodsinfo.setNumber(0);
             goodsinfo.setUserId(userId);
             goodsinfo.setGoodsInfoId(shopUtils.getUuid());
-            goodsinfoMapper.insert(goodsinfo);
-
+            Integer insert = goodsinfoMapper.insert(goodsinfo);
+            return insert>0?true:false;
         }else {
-            goodsinfoMapper.updateById(goodsinfo);
-        }
-        return true;
+            Integer integer = goodsinfoMapper.updateById(goodsinfo);
+        return integer>0?true:false;
+    }
+
     }
 }

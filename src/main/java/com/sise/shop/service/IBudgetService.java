@@ -25,7 +25,7 @@ public interface IBudgetService extends IService<Budget> {
      */
     Result saveBudget(Map map) throws InvocationTargetException, IllegalAccessException;
 
-    List<Budget> selectByUserId(String userId);
+
 
     /**
      * 查询最近7天的收支信息

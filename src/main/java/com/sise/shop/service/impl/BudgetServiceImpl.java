@@ -38,10 +38,8 @@ public class BudgetServiceImpl extends ServiceImpl<BudgetMapper, Budget> impleme
     @Resource
     private WholesalerMapper wholesalerMapper;
 
-    @Override
-    public List<Budget> selectByUserId(String userId) {
-        return budgetMapper.selectByUserId(userId);
-    }
+
+
 
     @Override
     public List<Map> selectByUserIdLimit7(String userId) {
@@ -240,8 +238,8 @@ map.put("该季度营业额",sumList[i]);
 
     @Override
     public List<Map> getOneMonthComeAndOut(String userId, String date) {
-        List<Map> list=budgetMapper.getOneMonthComeAndOut(userId,date);
-        List<Map> resultList=new ArrayList<>();
+        List<Map> list=budgetMapper.getOneMonthComeAndOut(userId,date);          //通过对月份进行模糊查询，查询到该月份的所有记录信息，返回一个list
+        List<Map> resultList=new ArrayList<>();                       //以下是将数据整理成为符合v-charts的格式
         for(int i=0;i<list.size();i++){
             Map m=new HashMap();
             Object createTime = list.get(i).get("createTime");

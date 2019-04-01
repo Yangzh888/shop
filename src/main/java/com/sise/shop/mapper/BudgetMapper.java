@@ -37,6 +37,7 @@ public interface BudgetMapper extends BaseMapper<Budget> {
      * @param userId
      * @return
      */
-    @Select("SELECT createTime,SUM(inSum) as AllInSum,SUM(outSum) AS AllOutSum FROM budget where userId=#{userId} and createTime LIKE CONCAT('%',#{date},'%') GROUP BY createTime")
+    @Select("SELECT createTime,SUM(inSum) as AllInSum,SUM(outSum) AS AllOutSum FROM budget where userId=#{userId} and " +
+            "createTime LIKE CONCAT('%',#{date},'%') GROUP BY createTime")
     List<Map> getOneMonthComeAndOut(@Param("userId")String userId,  @Param("date")String date);
 }

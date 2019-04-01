@@ -47,8 +47,9 @@ public class GoodsinfoController {
     public Page<Goodsinfo> getGoodsInfo(@RequestBody Map map){
         Goodsinfo goodsinfo=new Goodsinfo();
         String userId = shopUtils.getUserId(map);
+        Integer current = shopUtils.getCurrentByMap(map);
         goodsinfo.setUserId(userId);
-        Page<Goodsinfo> page=new Page<>();
+        Page<Goodsinfo> page=new Page<>(current,10);
         EntityWrapper<Goodsinfo> eWrapper=new EntityWrapper<>(goodsinfo);
         String selectWord=MapUtils.getString(map,"selectWord");
         if(!StringUtils.isEmpty(selectWord)){

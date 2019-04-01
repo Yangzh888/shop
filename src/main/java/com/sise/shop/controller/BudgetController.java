@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sise.shop.entity.Budget;
 import com.sise.shop.entity.EchartsEntityParam;
+import com.sise.shop.entity.Wholesaler;
 import com.sise.shop.service.IBudgetService;
 import com.sise.shop.service.IGoodsService;
 import com.sise.shop.service.IWholesalerService;
@@ -53,14 +54,34 @@ public class BudgetController {
         return result;
     }
 
-
+    /**
+     * 查询收入支出分页数据
+     *
+     * @param map
+     * @return
+     */
     @CrossOrigin
     @RequestMapping(value = "/getBubgetData", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public List<Budget> getBubgetData(@RequestBody Map map) {
+    public Page<Budget> getBubgetData(@RequestBody Map map) {
+        Budget budget=new Budget();
         String userId = (String) map.get("userId");
-        List<Budget> budgetList = iBudgetService.selectByUserId(userId);
-        return budgetList;
+        budget.setUserId(userId);
+        Integer current = shopUtils.getCurrentByMap(map);
+        Page<Budget> page=new Page<>(current,10);
+        EntityWrapper<Budget> wrapper=new EntityWrapper<>();
+        String selectWord= MapUtils.getString(map,"selectWord");
+        if(!StringUtils.isEmpty(selectWord)){        //存在关键字搜索即模糊查询
+            wrapper.like("memo",selectWord, SqlLike.DEFAULT);
+        }
+        String createTime= MapUtils.getString(map,"createTime");
+
+        if(!StringUtils.isEmpty(createTime)){        //存在关键字搜索即模糊查询
+
+            wrapper.like("createTime",createTime, SqlLike.DEFAULT);
+        }
+        Page<Budget> pageList=budget.selectPage(page,wrapper);
+        return pageList;
     }
 
     /**
@@ -100,31 +121,7 @@ public class BudgetController {
     }
 
     /**
-     * 查询收入支出分页数据
-     *
-     * @param map
-     * @return
-     */
-    @CrossOrigin
-    @RequestMapping(value = "/selectPage", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public Page<Budget> selectPage(@RequestBody Map map) {
-        Budget budget = new Budget();
-        String userId = (String) map.get("userId");
-        budget.setUserId(userId);
-        Integer current = shopUtils.getCurrentByMap(map);
-        Page<Budget> page = new Page<Budget>(current, 8);
-        EntityWrapper<Budget> eWrapper = new EntityWrapper<Budget>(budget, "8");
-        String selectWord = MapUtils.getString(map, "selectWord");              //判断是否有模糊查询参数
-        if (!StringUtils.isEmpty(selectWord)) {
-            eWrapper.like("memo", selectWord, SqlLike.DEFAULT);
-        }
-        Page<Budget> budgetList = budget.selectPage(page, eWrapper);
-        return budgetList;
-    }
-
-    /**
-     * 查询收入支出分页数据
+     * 删除数据
      *
      * @param map
      * @return
@@ -269,8 +266,8 @@ public class BudgetController {
     public Result getOneMonthComeAndOut(@RequestBody Map map) {
         String userId = shopUtils.getUserId(map);
         String selectMonth = null;
-        selectMonth = MapUtils.getString(map, "selectMonth");            //2019年9月--前端对应传来的是2019-8-31日
-        if (selectMonth == null||selectMonth=="") {
+        selectMonth = MapUtils.getString(map, "selectMonth");
+        if (selectMonth == null||selectMonth=="") {                        //如果没有传时间值过来则默认当前月份
             Date date = new Date();
             selectMonth = shopUtils.dateTostring(date).substring(0, 7);
         }
