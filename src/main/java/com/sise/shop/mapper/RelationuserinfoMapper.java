@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,4 +24,7 @@ public interface RelationuserinfoMapper extends BaseMapper<Relationuserinfo> {
 
     @Update("update relationuserinfo set password=#{password} where relationUserInfoId=#{userSonId}")
     Integer updateUserSonPassword(@Param("userSonId")String userSonId, @Param("password")String password);
+
+    @Select("select * from RelationUserInfo WHERE userId <> 'admin'")
+    List<Map> getAllUserInfo();
 }

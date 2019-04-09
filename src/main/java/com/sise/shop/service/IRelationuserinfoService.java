@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.sise.shop.utilis.result.Result;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,4 +37,15 @@ public interface IRelationuserinfoService extends IService<Relationuserinfo> {
      * 注册新店铺时管理员同时更新子表数据
      */
     boolean insertUserSonInfo(String userId,String relationUserInfoName,String password,String createTime);
+
+
+    /**
+     * 超级管理员
+     * 获取所有人用户的信息
+     * @return
+     */
+    List<Map> getAllUserInfo();
+
+
+
 }

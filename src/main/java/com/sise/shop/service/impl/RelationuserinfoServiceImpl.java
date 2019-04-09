@@ -93,4 +93,9 @@ private  RelationuserinfoMapper relationuserinfoMapper;
         Integer insert = relationuserinfoMapper.insert(r);
         return insert>0?true:false;
     }
+
+    @Override
+    public List<Map> getAllUserInfo() {
+        return relationuserinfoMapper.getAllUserInfo();
+    }
 }

@@ -115,4 +115,31 @@ package com.sise.shop.controller;
             Integer b= iRelationuserinfoService.updateUserSonPassword(userSonId,password);
             return shopUtils.isSuccess(b,"更新成功","更新失败，请重试");
         }
+        /**
+         * 超级管理员获取所有人信息
+         */
+        @CrossOrigin
+        @RequestMapping(value = "/getAllUserInfo", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+        @ResponseBody
+        public List<Map> getAllUserInfo(){
+            List<Map> list = iRelationuserinfoService.getAllUserInfo();
+            Relationuserinfo relationuserinfo=new Relationuserinfo();
+            EntityWrapper wrapper=new EntityWrapper();
+            wrapper.ne("userId","admin");
+            List<Relationuserinfo> relationuserinfos = relationuserinfo.selectList(wrapper);
+            return  list;
+        }
+        /**
+         * 超级管理员修改密码
+         */
+        @CrossOrigin
+        @RequestMapping(value = "/updatePasswordByAdministrator", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+        @ResponseBody
+        public Result updatePasswordByAdministrator(@RequestBody Map  map){
+            String password = MapUtils.getString(map, "password");
+            String userSonId = shopUtils.getUserSonId(map,"relationUserInfoId");
+            Integer b= iRelationuserinfoService.updateUserSonPassword(userSonId,password);
+            return shopUtils.isSuccess(b,"更新成功","更新失败，请重试");
+
+        }
     }
