@@ -1,4 +1,4 @@
-# 基于SprongBoot整合SSM的管理系统后端项目-。
+# 基于SprongBoot整合SSM的商铺管理系统后端项目-。
 
 ## 功能 ##
 - [x] Element UI
@@ -14,7 +14,7 @@
 
 
 
-## 安装步骤 ##
+## 启动步骤 ##
 
 下载IntelliJ IDEA 。
 将springboot项目导入。
