@@ -91,9 +91,9 @@ public class OthersController {
     @RequestMapping(value = "/selectPage", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Page<Others> selectPage(@RequestBody Map map){
-        Others others = new Others();
+            Others others = new Others();
         Integer current = shopUtils.getCurrentByMap(map);
-        Page<Others> page = new Page<Others>(current,5);
+        Page<Others> page = new Page<Others>();
         EntityWrapper<Others> eWrapper = new EntityWrapper<Others>(others);
         eWrapper.eq("userId",shopUtils.getUserId(map));
         eWrapper.eq("status",MapUtils.getString(map,"status"));               //通过前段传来的map判断要查询什么状态下的待办信息
@@ -105,6 +105,32 @@ public class OthersController {
         Page<Others> othersList = others.selectPage(page,eWrapper);
         return  othersList;
     }
+
+
+    /**
+     * 查询待办分页数据
+     * @param map
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/selectPage1", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Page<Others> selectPage1(@RequestBody Map map){
+        Others others = new Others();
+        Integer current = shopUtils.getCurrentByMap(map);
+        Page<Others> page = new Page<Others>(current,3);
+        EntityWrapper<Others> eWrapper = new EntityWrapper<Others>(others);
+        eWrapper.eq("userId",shopUtils.getUserId(map));
+        eWrapper.eq("status",MapUtils.getString(map,"status"));               //通过前段传来的map判断要查询什么状态下的待办信息
+        String selectWord = MapUtils.getString(map, "selectWord");
+        if(!StringUtils.isEmpty(selectWord))
+        {
+            eWrapper.like("title",selectWord,SqlLike.DEFAULT);
+        }
+        Page<Others> othersList = others.selectPage(page,eWrapper);
+        return  othersList;
+    }
+
 
     /**
      * 根据OthersID更新状态

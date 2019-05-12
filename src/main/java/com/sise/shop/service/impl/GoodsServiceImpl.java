@@ -91,7 +91,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
                 }
                 //关联客户
                 String customerId = MapUtils.getString(goodsMap, "customerId");
-                String customerName = wholesalerService.selectById(customerId).getWholesalerName();
+                String customerName = wholesalerService.selectById(customerId).getLinkMan();
                 goods.setCustomerName(customerName);
                 goods.setCustomerId(customerId);
             }

@@ -101,7 +101,11 @@ private IWholesalerService iWholesalerService;
         List<WholesalerParam> paramsList=new ArrayList<>();
         for (Wholesaler wholesaler:list) {
             WholesalerParam wholesalerParam=new WholesalerParam();
-            wholesalerParam.setLabel(wholesaler.getWholesalerName());
+            if(MapUtils.getString(map,"status").equals("customer")){
+                wholesalerParam.setLabel(wholesaler.getLinkMan());
+            }else{
+                wholesalerParam.setLabel(wholesaler.getWholesalerName());
+            }
             wholesalerParam.setValue(wholesaler.getWholesalerId());
             paramsList.add(wholesalerParam);
         }
@@ -128,5 +132,18 @@ private IWholesalerService iWholesalerService;
         wrapper.orderBy("createTime",false);
         Page<Goods> goodsList=goods.selectPage(page,wrapper);
         return goodsList;
+    }
+    @CrossOrigin
+    @RequestMapping(value ="/deletewholesaler", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public Result deletewholesaler(@RequestBody Map map){
+        String wholesalerId = MapUtils.getString(map, "wholesalerId");
+        boolean b = iWholesalerService.deleteById(wholesalerId);
+        if (b){
+            return ResultFactory.buildSuccessResult("删除成功");
+        }else{
+            return ResultFactory.buildFailResult("删除失败");
+        }
+
     }
 }
